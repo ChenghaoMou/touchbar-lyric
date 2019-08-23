@@ -92,7 +92,7 @@ def main():
     else:
 
         ids = get_id(title, artists)
-        lyric = get_lyric(ids)
+        lyric = get_lyrics(ids)
         words = parse(lyric, position, duration)
         if words is not None:
             print(words)
@@ -103,20 +103,29 @@ def main():
         return
 
 
+@cachier(stale_after=datetime.timedelta(days=3))
+def get_lyric(id):
+    url = f"http://music.163.com/api/song/lyric?m&id={id}&lv=-1&kv=1&tv=1"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+
+    r = requests.get(url, headers=headers)
+    data = r.json()
+
+    if 'lrc' in data:
+        return data['lrc']['lyric']
+    else:
+        return None
+
 # @cachier(stale_after=datetime.timedelta(days=3))
-def get_lyric(ids):
+
+
+def get_lyrics(ids):
 
     for id in ids:
-        url = f"http://music.163.com/api/song/lyric?m&id={id}&lv=-1&kv=1&tv=1"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-
-        r = requests.get(url, headers=headers)
-        data = r.json()
-
-        if 'lrc' in data:
-            return data['lrc']['lyric']
-
+        lyric = get_lyric(id)
+        if lyric:
+            return lyric
     return None
 
 
