@@ -108,7 +108,7 @@ def get_lyric(id) -> str:
     ).get("lrc", {}).get("lyric", "")
 
 
-@cachier(stale_after=datetime.timedelta(days=1))
+@cachier(stale_after=datetime.timedelta(days=3))
 def search(title, artists) -> List[NeteaseSong]:
 
     eparams = {
@@ -128,6 +128,7 @@ def search(title, artists) -> List[NeteaseSong]:
     )
     artists = artists.replace(' ', '').replace(',', '').replace('-', '').lower()
     artists = pinyin.get(artists, delimiter='', format='strip')
+    backup = []
 
     for item in res_data:
 
@@ -137,16 +138,18 @@ def search(title, artists) -> List[NeteaseSong]:
         for singer in singers:
             if singer in artists:
                 found = True
-        if not found:
-            continue
+
         song = NeteaseSong(
             id=item.get("id", ""),
             title=item.get("name", ""),
             artists="".join(singers),
         )
-        songs_list.append(song)
-
-    return songs_list
+        if found:
+            songs_list.append(song)
+        else:
+            backup.append(song)
+    # print(songs_list, backup)
+    return songs_list if songs_list else backup[:1]
 
 
 def get_lyrics(songs: List[NeteaseSong]) -> List:
