@@ -2,6 +2,8 @@
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs.
 
+# Currently not working due to encrypted response from netease!
+
 ## Implementation
 
 I used netease music web apis for synced lyrics and cachier to reduce the need to crawl the webpage. Apple script for Spotify & **Music** information retrieval.
