@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="touchbar-lyric",
-    version="0.0.4",
+    version="0.0.5",
     author="Chenghao",
-    python_requires='>3.7.0',
+    python_requires='>3.6.0',
     author_email="mouchenghao@gmail.com",
     description="Show time-synced lyric with BTT!",
     long_description=long_description,

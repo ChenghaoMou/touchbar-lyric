@@ -3,7 +3,7 @@ cache: pip
 os: osx
 osx_image: xcode8.3
 sudo: required
-python: "3.7"
+python: "3.6"
 install: pip install -r requirements.txt
 script: python -m touchbar_lyric
 notifications:

@@ -14,7 +14,6 @@ import math
 import requests
 from cachier import cachier
 import datetime
-from dataclasses import dataclass
 from typing import *
 import pinyin
 from hanziconv import HanziConv
@@ -90,12 +89,12 @@ class NeteaseRequest:
         return resp.json()
 
 
-@dataclass
 class NeteaseSong:
 
-    id: str
-    title: str
-    artists: str
+    def __init__(id: int, title: str, artists: str):
+        self.id = id
+        self.title = title
+        self.artists = artists
 
 
 @cachier(stale_after=datetime.timedelta(days=1))
