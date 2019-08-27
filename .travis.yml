@@ -1,5 +1,7 @@
 language: python
 cache: pip
+python:
+  - "3.7"
 install: pip install -r requirements.txt
 script: python -m touchbar_lyric
 notifications:
@@ -12,8 +14,7 @@ deploy:
   on:
     tags: true
     branch:
-    - master
-    - - "/v?(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$/"
+      - "master"
   distributions: sdist
   skip_existing: true
   password:
