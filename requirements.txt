@@ -1,0 +1,6 @@
+osascript==2019.4.13
+requests==2.22.0
+pinyin==0.4.0
+hanziconv==0.3.2
+cachier==1.2.6
+pycrypto==2.6.1
