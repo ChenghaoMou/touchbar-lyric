@@ -109,7 +109,7 @@ def get_proxy(api):
         return None
 
     r = requests.get(f"http://pubproxy.com/api/proxy?api={api}&post=true&cookie=true&referer=true&https=true&last_check=60&country=US,RU,JP,ZH")
-    print("Hello", r.json())
+    # print("Hello", r.json())
     return {
         'http': r.json()['data'][0]['ipPort'],
         'https': r.json()['data'][0]['ipPort']
@@ -192,7 +192,7 @@ def get_info():
                 return currentInfo
             end run
     ''', background=False)
-    print(res)
+    # print(res)
     if res:
         info = res.split('###')
 
@@ -254,7 +254,7 @@ def main(api):
     res = get_info()
 
     if res is None:
-        print('404 No lyric found')
+        # print('404 No lyric found')
         return
     else:
         application, artists, title, position, status, duration = res
