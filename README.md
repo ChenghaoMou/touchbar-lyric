@@ -30,6 +30,11 @@ Same as Kashi:
 
 1. Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
 2. Change the python path to your own python path in the script area;
+3. Optional: You can use pubproxy api to remedy netease's anti-crawler mechanism.
+
+```shell
+${PYTHONPATH} -m touchbar_lyric --api ${PUBPROXY_API}
+```
 
 ## Preview
 
