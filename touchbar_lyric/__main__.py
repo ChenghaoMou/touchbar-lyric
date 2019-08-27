@@ -192,7 +192,7 @@ def get_info():
                 return currentInfo
             end run
     ''', background=False)
-
+    print(res)
     if res:
         info = res.split('###')
 
@@ -236,7 +236,9 @@ def parse(lyric, position, duration):
     lines = list(map(parse_line, lines))
 
     if all(line[0] == 0 for line in lines):
-        _, words = lines[min(int(len(lines) * position / duration), len(lines)-1)]
+        if not lines:
+            return 'No lyric'
+        _, words = lines[min(len(lines) * math.floor(position / duration), len(lines)-1)]
         return '❌ ' + words
 
     starts = [0] + [line[0] for line in lines][:-1]
