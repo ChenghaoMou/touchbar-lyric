@@ -91,7 +91,7 @@ class NeteaseRequest:
 
 class NeteaseSong:
 
-    def __init__(id: int, title: str, artists: str):
+    def __init__(self, id: int, title: str, artists: str):
         self.id = id
         self.title = title
         self.artists = artists
