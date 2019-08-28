@@ -83,14 +83,18 @@ class NeteaseRequest:
 
         proxies = get_proxy(api)
 
-        if method == "GET":
-            resp = cls.session.get(url, params=data, timeout=20, proxies=proxies)
-        else:
-            resp = cls.session.post(url, data=data, timeout=20, proxies=proxies)
+        try:
+            if method == "GET":
+                resp = cls.session.get(url, params=data, timeout=20, proxies=proxies)
+            else:
+                resp = cls.session.post(url, data=data, timeout=20, proxies=proxies)
+        except Exception as e:
+            get_proxy.clear_cache()
+            return {}
         if resp.status_code != requests.codes.ok:
-            raise RequestError(resp.text)
+            raise Exception(resp.text)
         if not resp.text:
-            raise ResponseError("No response data.")
+            raise Exception("No response data.")
         # print(resp.content)
         return resp.json()
 
