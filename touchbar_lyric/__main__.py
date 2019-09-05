@@ -188,6 +188,10 @@ def get_info():
                     tell application "Spotify"
                         set currentInfo to {"Spotify", artist of current track, "###", name of current track, player position, player state, duration of current track}
                     end tell
+                else if application "iTunes" is running then
+                    tell application "iTunes"
+                        set currentInfo to {"iTunes", artist of current track, "###", name of current track, player position, player state, duration of current track}
+                    end tell
                 else if application "Music" is running then
                     tell application "Music"
                         set currentInfo to {"Music", artist of current track, "###", name of current track, player position, player state, duration of current track}

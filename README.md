@@ -9,19 +9,41 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 
 1. Netease music web apis for **synced lyrics**;
 2. cachier to **cache** function calls and reduce the need to call webapis;
-3. Apple script for Spotify & **Music** background track information;
+3. Apple script for Spotify & iTunes/Music background track information;
 4. Support for **English/Chinese**;
-
-Note: I am using Catalina, so 'iTunes' in previous macOS is now 'Music'. You can change the 'Music' back to 'iTunes'.
 
 ## Instruction
 
 ### 1. Denpendencies
 
-It is advised to set up a new python environment with 3.6+.
+First check your python version, which should be 3.6+. All commands should be executed in your terminal.
 
 ```shell
-pip install touchbar_lyric
+python3 --version
+```
+
+#### pip
+
+```shell
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+```
+
+```Shell
+python3 get-pip.py
+```
+
+You might want to restart your terminal.
+
+```shell
+pip3 install touchbar_lyric
+```
+
+### Python Path
+
+Take a note for the python3 path. We will refer it as `${PYTHONPATH}`
+
+```shell
+whereis python3
 ```
 
 ### 2. Configuration in BetterTouchTool
@@ -29,12 +51,14 @@ pip install touchbar_lyric
 Same as Kashi:
 
 1. Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
-2. Change the python path to your own python path in the script area;
+2. Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path in the script area;
 3. Optional: You can use pubproxy api to remedy netease's anti-crawler mechanism.
 
 ```shell
 ${PYTHONPATH} -m touchbar_lyric --api ${PUBPROXY_API}
 ```
+
+Where `--api ${PUBPROXY_API}` is optional.
 
 ## Preview
 
