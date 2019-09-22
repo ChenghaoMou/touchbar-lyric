@@ -258,16 +258,20 @@ def parse(lyric, position, duration):
             return words
 
 
-def main(api):
+def main(api, debug=False):
     res = get_info()
 
     if res is None:
-        # print('404 No lyric found')
+
+        if debug:
+            print('Not playing')
         return
     else:
         application, artists, title, position, status, duration = res
 
     if status != 'playing':
+        if debug:
+            print('Paused')
         return
     else:
         songs = search(title, artists, api=api)
