@@ -196,7 +196,7 @@ def get_info():
                 return currentInfo
             end run
     ''', background=False)
-    print(res, error, code)
+    # print(res, error, code)
     if res:
         info = res.split('###')
 
