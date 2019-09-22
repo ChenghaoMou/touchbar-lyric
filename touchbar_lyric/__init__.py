@@ -181,7 +181,7 @@ def get_lyrics(songs: List[NeteaseSong], api=None) -> List:
             return lyric
 
 
-def get_info():
+def get_info(debug=False):
     code, res, error = osascript.run('''
             on run
                 if application "Spotify" is running then
@@ -196,7 +196,8 @@ def get_info():
                 return currentInfo
             end run
     ''', background=False)
-    # print(res, error, code)
+    if debug:
+        print(res, error, code)
     if res:
         info = res.split('###')
 
@@ -255,7 +256,7 @@ def parse(lyric, position, duration):
 
 
 def main(api, debug=False):
-    res = get_info()
+    res = get_info(debug)
 
     if res is None:
 
