@@ -5,6 +5,34 @@
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based on the idea of [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301).
 
+#Note:
+Only tested with Catalina. If you are on Mojave, please clone the repo and change the the following code:
+
+edit `touchbar_lyric/__init__.py` 
+change the code in `get_info` (basically change `Music` to `iTunes`)
+```python
+else if application "Music" is running then
+    tell application "Music"
+        set currentInfo to {"Music", artist of current track, "###", name of current track, player position, player state, duration of current track}
+    end tell
+end if
+```
+
+to 
+```python
+else if application "iTunes" is running then
+    tell application "iTunes"
+        set currentInfo to {"iTunes", artist of current track, "###", name of current track, player position, player state, duration of current track}
+    end tell
+end if
+```
+the execute the following command in the directory of the repo:
+
+```bash
+pip install --editable .
+```
+
+
 ## Features
 
 1. Netease music web apis for **synced lyrics**;
