@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2020-03-10 10:54:37
+# @Author  : Chenghao Mou (mouchenghao@gmail.com)
+
 
 import argparse
 import os
@@ -88,7 +93,7 @@ class NeteaseRequest:
                 resp = cls.session.get(url, params=data, timeout=20, proxies=proxies)
             else:
                 resp = cls.session.post(url, data=data, timeout=20, proxies=proxies)
-        except Exception as e:
+        except Exception as _:
             get_proxy.clear_cache()
             return {}
         if resp.status_code != requests.codes.ok:
@@ -243,7 +248,7 @@ def parse(lyric, position, duration):
     if all(line[0] == 0 for line in lines):
         if not lines:
             return 'No lyric'
-        _, words = lines[min(len(lines) * math.floor(position / duration), len(lines)-1)]
+        _, words = lines[min(len(lines) * math.floor(position / duration), len(lines) - 1)]
         return '❌ ' + words
 
     starts = [0] + [line[0] for line in lines][:-1]
