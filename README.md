@@ -5,7 +5,7 @@
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based on the idea of [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301).
 
-#Note:
+\#Note:
 Only tested with Catalina. If you are on Mojave, please clone the repo and change the the following code:
 
 edit `touchbar_lyric/__init__.py`
@@ -28,6 +28,7 @@ else if application "iTunes" is running then
     end tell
 end if
 ```
+
 the execute the following command in the directory of the repo:
 
 ```bash
@@ -36,10 +37,10 @@ pip install --editable .
 
 ## Features
 
-1. Netease music web apis for **synced lyrics**;
-2. cachier to **cache** function calls and reduce the need to call webapis;
-3. Apple script for Spotify & iTunes/Music background track information;
-4. Support for **English/Chinese**;
+1.  Netease music web apis for **synced lyrics**;
+2.  cachier to **cache** function calls and reduce the need to call webapis;
+3.  Apple script for Spotify & iTunes/Music background track information;
+4.  Support for **English/Chinese**;
 
 ## Instruction
 
@@ -79,9 +80,9 @@ whereis python3
 
 Same as Kashi:
 
-1. Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
-2. Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path in the script area;
-3. Optional: You can use pubproxy api to remedy netease's anti-crawler mechanism.
+1.  Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
+2.  Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path in the script area;
+3.  Optional: You can use pubproxy api to remedy netease's anti-crawler mechanism.
 
 ```shell
 ${PYTHONPATH} -m touchbar_lyric --api ${PUBPROXY_API}

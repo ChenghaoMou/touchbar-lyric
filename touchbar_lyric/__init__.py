@@ -13,11 +13,9 @@ from typing import List
 from Crypto.Cipher import AES
 import requests
 import osascript
-import time
 import math
 from cachier import cachier
 import datetime
-from typing import *
 import pinyin
 from hanziconv import HanziConv
 
@@ -89,7 +87,8 @@ class NeteaseRequest:
                 resp = cls.session.get(url, params=data, timeout=20, proxies=proxies)
             else:
                 resp = cls.session.post(url, data=data, timeout=20, proxies=proxies)
-        except Exception as _:
+        except Exception as e:
+            print(e)
             get_proxy.clear_cache()
             return {}
         if resp.status_code != requests.codes.ok:
