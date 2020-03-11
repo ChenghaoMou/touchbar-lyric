@@ -4,21 +4,17 @@
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
 
-import argparse
 import os
 import re
 import binascii
 import base64
 import json
-import copy
-import requests
+from typing import List
 from Crypto.Cipher import AES
 import requests
 import osascript
-import hashlib
 import time
 import math
-import requests
 from cachier import cachier
 import datetime
 from typing import *
@@ -106,8 +102,8 @@ class NeteaseRequest:
 
 class NeteaseSong:
 
-    def __init__(self, id: int, title: str, artists: str):
-        self.id = id
+    def __init__(self, idx: int, title: str, artists: str):
+        self.id = idx
         self.title = title
         self.artists = artists
 
@@ -118,7 +114,7 @@ def get_proxy(api):
         return None
 
     r = requests.get(f"http://pubproxy.com/api/proxy?api={api}&post=true&cookie=true&referer=true&https=true&last_check=60&country=US,RU,JP,ZH")
-    # print("Hello", r.json())
+
     return {
         'http': r.json()['data'][0]['ipPort'],
         'https': r.json()['data'][0]['ipPort']
@@ -126,8 +122,8 @@ def get_proxy(api):
 
 
 @cachier(stale_after=datetime.timedelta(days=3))
-def get_lyric(id, api=None) -> str:
-    row_data = {"csrf_token": "", "id": id, "lv": -1, "tv": -1}
+def get_lyric(idx, api=None) -> str:
+    row_data = {"csrf_token": "", "id": idx, "lv": -1, "tv": -1}
     data = NeteaseRequest.encrypted_request(row_data)
 
     return NeteaseRequest.request(
@@ -167,7 +163,7 @@ def search(title, artists, api=None) -> List[NeteaseSong]:
                 found = True
 
         song = NeteaseSong(
-            id=item.get("id", ""),
+            idx=item.get("id", ""),
             title=item.get("name", ""),
             artists="".join(singers),
         )
@@ -184,6 +180,7 @@ def get_lyrics(songs: List[NeteaseSong], api=None) -> List:
         lyric = get_lyric(song.id, api=api)
         if lyric is not None:
             return lyric
+    return []
 
 
 def get_info(debug=False):
@@ -227,20 +224,18 @@ def get_info(debug=False):
 
 
 def parse(lyric, position, duration):
-    if lyric is None:
+    if lyric is None or len(lyric) == 0:
         return
-    # print(position)
+
     lines = [line for line in lyric.split('\n') if line.strip()]
 
     def parse_line(line):
 
         if not re.findall('\[([0-9]+):([0-9])+\.([0-9]+)\]', line):
             return 0, line
-        # print(re.findall('\[([0-9]+):([0-9])+\.([0-9]+)\]', line))
         minute, second, _ = re.findall('\[([0-9]+):([0-9]+)\.([0-9]+)\]', line)[0]
         curr = int(minute) * 60 + int(second)
         words = re.sub('\[.*?\]', '', line)
-        # print(minute, second)
         return curr, words
 
     lines = list(map(parse_line, lines))

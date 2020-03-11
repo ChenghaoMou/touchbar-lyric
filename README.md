@@ -8,8 +8,9 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 #Note:
 Only tested with Catalina. If you are on Mojave, please clone the repo and change the the following code:
 
-edit `touchbar_lyric/__init__.py` 
+edit `touchbar_lyric/__init__.py`
 change the code in `get_info` (basically change `Music` to `iTunes`)
+
 ```python
 else if application "Music" is running then
     tell application "Music"
@@ -18,7 +19,8 @@ else if application "Music" is running then
 end if
 ```
 
-to 
+to
+
 ```python
 else if application "iTunes" is running then
     tell application "iTunes"
@@ -31,7 +33,6 @@ the execute the following command in the directory of the repo:
 ```bash
 pip install --editable .
 ```
-
 
 ## Features
 
