@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2020-03-15 15:09:54
+# @Author  : Chenghao Mou (mouchenghao@gmail.com)
+
 
 import argparse
 from touchbar_lyric import main

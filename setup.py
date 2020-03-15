@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="touchbar-lyric",
-    version="0.2.0",
+    version="0.2.1",
     author="Chenghao",
     python_requires='>3.6.0',
     author_email="mouchenghao@gmail.com",

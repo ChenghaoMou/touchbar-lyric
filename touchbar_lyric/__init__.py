@@ -88,14 +88,13 @@ class NeteaseRequest:
             else:
                 resp = cls.session.post(url, data=data, timeout=20, proxies=proxies)
         except Exception as e:
-            print(e)
             get_proxy.clear_cache()
             return {}
         if resp.status_code != requests.codes.ok:
             raise Exception(resp.text)
         if not resp.text:
             raise Exception("No response data.")
-        # print(resp.content)
+
         return resp.json()
 
 
@@ -124,10 +123,7 @@ def get_proxy(api):
 def get_lyric(idx, api=None) -> str:
     row_data = {"csrf_token": "", "id": idx, "lv": -1, "tv": -1}
     data = NeteaseRequest.encrypted_request(row_data)
-
-    return NeteaseRequest.request(
-        "https://music.163.com/weapi/song/lyric", method="POST", data=data, api=api
-    ).get("lrc", {}).get("lyric", "")
+    return NeteaseRequest.request("https://music.163.com/weapi/song/lyric", method="POST", data=data, api=api).get("lrc", {}).get("lyric", "")
 
 
 @cachier(stale_after=datetime.timedelta(days=3))
