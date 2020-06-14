@@ -1,6 +1,5 @@
 
 from touchbar_lyric import NeteaseRequest, get_lyric, search, pinyinfy
-from loguru import logger
 
 
 def test_request():

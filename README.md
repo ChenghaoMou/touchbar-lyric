@@ -6,7 +6,6 @@
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based on the idea of [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301).
 
-
 ## Features
 
 1.  Netease music web apis for **synced lyrics**;
@@ -57,11 +56,12 @@ Same as Kashi:
 1.  Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
 2.  Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path in the script area;
 
-
 ```shell
 ${PYTHONPATH} -m touchbar_lyric --app Music
 ```
+
 or use Spotify(default)
+
 ```shell
 ${PYTHONPATH} -m touchbar_lyric --app Spotify
 ```
@@ -71,31 +71,31 @@ ${PYTHONPATH} -m touchbar_lyric --app Spotify
 ![Preview](./Preview1.png)
 ![Preview](./Preview2.png)
 
-
 # 中文指南
+
 ## 背景知识
 
-- 脚本运行需要 BTT + Python3.6+。
-- 仅支持系统自带的 Music 和 Spotify，推荐使用 Spotify。
+-   脚本运行需要 BTT + Python3.6+。
+-   仅支持系统自带的 Music 和 Spotify，推荐使用 Spotify。
 
 ## Python 设置
 
-- 检查 macOS 系统自带的 Python3 ，在系统自带的 Terminal 应用中输入以下命令
+-   检查 macOS 系统自带的 Python3 ，在系统自带的 Terminal 应用中输入以下命令
 
 ```bash
 whereis python3
 ```
 
-*返回输出的路径信息后面会使用
+\*返回输出的路径信息后面会使用
 
-- 安装 `pip`
+-   安装 `pip`
 
 ```bash
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py
 ```
 
-- 安装 `touchbar-lyric`
+-   安装 `touchbar-lyric`
 
 ```bash
 pip3 install touchbar_lyric
@@ -103,6 +103,6 @@ pip3 install touchbar_lyric
 
 ## BTT设置
 
-- 复制 `lyric.json` 里面的内容，在BTT的Touch Bar 配置界面直接粘贴
-- 在右侧脚本区域， 把 `/Users/chenghaomou/Anaconda/bin/python` 换成第一步中的路径
-- 在 Spotify/Music 运行时，应该出现歌词挂件
+-   复制 `lyric.json` 里面的内容，在BTT的Touch Bar 配置界面直接粘贴
+-   在右侧脚本区域， 把 `/Users/chenghaomou/Anaconda/bin/python` 换成第一步中的路径
+-   在 Spotify/Music 运行时，应该出现歌词挂件

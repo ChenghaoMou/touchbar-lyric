@@ -3,12 +3,12 @@
 # @Date    : 2020-03-10 10:54:37
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
+"""Touchbar lyric widget for BTT."""
 
 import base64
 import binascii
 import datetime
 import json
-import math
 import os
 import regex as re
 from typing import Any, Dict, List, Tuple
@@ -192,6 +192,7 @@ def pinyinfy(name: str) -> str:
 
 
 class NeteaseRequest:
+
     """A request wrapper for Netease music."""
 
     session = requests.Session()
@@ -279,6 +280,14 @@ class NeteaseRequest:
 class NeteaseSong:
 
     def __init__(self, idx: int, title: str, artists: str):
+        """Netease song wrapper class.
+
+        Args:
+            idx (int): Index
+            title (str): Title of the song
+            artists (str): String of artists
+
+        """
         self.id = idx
         self.title = title
         self.artists = artists
