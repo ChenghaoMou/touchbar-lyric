@@ -19,4 +19,4 @@ def test_search():
 
 def test_pinyinfy():
     assert pinyinfy("周杰伦") == "zhoujielun"
-    assert pinyinfy("Jay Chou") == "Jay Chou"
+    assert pinyinfy("Jay Chou") == "jay chou"
