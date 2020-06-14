@@ -280,7 +280,8 @@ class NeteaseRequest:
 class NeteaseSong:
 
     def __init__(self, idx: int, title: str, artists: str):
-        """Netease song wrapper class.
+        """
+        Netease song wrapper class.
 
         Args:
             idx (int): Index
@@ -359,7 +360,8 @@ def search(title, artists, debug: bool = False) -> List[NeteaseSong]:
 
 
 def get_lyrics(songs: List[NeteaseSong], debug: bool = False) -> List[Any]:
-    """Retrieve a list of lyric from given songs.
+    """
+    Retrieve a list of lyric from given songs.
 
     Args:
         songs (List[NeteaseSong]): List of NeteaseSong
