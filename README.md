@@ -1,8 +1,7 @@
 <center><h1>Synced Lyric on TouchBar</h1></center>
 <br></br>
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/77de523131f9441997db18c608b3c54e)](https://app.codacy.com/manual/mouchenghao/touchbar-lyric?utm_source=github.com&utm_medium=referral&utm_content=ChenghaoMou/touchbar-lyric&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.com/ChenghaoMou/touchbar-lyric.svg?branch=master)](https://travis-ci.com/ChenghaoMou/touchbar-lyric)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/77de523131f9441997db18c608b3c54e)](https://app.codacy.com/manual/mouchenghao/touchbar-lyric?utm_source=github.com&utm_medium=referral&utm_content=ChenghaoMou/touchbar-lyric&utm_campaign=Badge_Grade_Dashboard) [![Build Status](https://travis-ci.com/ChenghaoMou/touchbar-lyric.svg?branch=master)](https://travis-ci.com/ChenghaoMou/touchbar-lyric) [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/aadeca6117a14aa6b655e21d5bbc09ea)](https://www.codacy.com/manual/mouchenghao/touchbar-lyric?utm_source=github.com&utm_medium=referral&utm_content=ChenghaoMou/touchbar-lyric&utm_campaign=Badge_Coverage)
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based on the idea of [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301).
 
@@ -12,6 +11,13 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 2.  cachier to **cache** function calls and reduce the need to call webapis;
 3.  Apple script for Spotify & iTunes/Music background track information;
 4.  Support for **English/Chinese(Simplified)**;
+
+## Style
+It follows the following style to display each line of the lyric:
+```
+[Title/Author(s)] Lyric
+```
+See Preview for more.
 
 Note: Netease music itself is not supported as it does not support apple script now.
 
@@ -106,3 +112,9 @@ pip3 install touchbar_lyric
 -   复制 `lyric.json` 里面的内容，在BTT的Touch Bar 配置界面直接粘贴
 -   在右侧脚本区域， 把 `/Users/chenghaomou/Anaconda/bin/python` 换成第一步中的路径
 -   在 Spotify/Music 运行时，应该出现歌词挂件
+
+## 预览
+歌词信息按照 `[歌曲名/演唱者] 歌词` 格式，具体效果如图所示：
+
+![Preview](./preview1.png)
+![Preview](./preview2.png)
