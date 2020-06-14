@@ -13,10 +13,8 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 4.  Support for **English/Chinese(Simplified)**;
 
 ## Style
-It follows the following style to display each line of the lyric:
-```
-[Title/Author(s)] Lyric
-```
+It follows `[Title/Author(s)] Lyric` style by default.
+
 See Preview for more.
 
 Note: Netease music itself is not supported as it does not support apple script now.
@@ -72,6 +70,8 @@ or use Spotify(default)
 ${PYTHONPATH} -m touchbar_lyric --app Spotify
 ```
 
+**You can also add `--minimal` flag at the end of the command to remove title and artists information.**
+
 ## Preview
 
 ![Preview](./preview1.png)
@@ -111,6 +111,7 @@ pip3 install touchbar_lyric
 
 -   复制 `lyric.json` 里面的内容，在BTT的Touch Bar 配置界面直接粘贴
 -   在右侧脚本区域， 把 `/Users/chenghaomou/Anaconda/bin/python` 换成第一步中的路径
+-   可以在命令最后添加 `--minimal` 只显示歌词信息
 -   在 Spotify/Music 运行时，应该出现歌词挂件
 
 ## 预览
