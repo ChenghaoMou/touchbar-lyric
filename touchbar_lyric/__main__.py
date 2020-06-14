@@ -12,8 +12,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser('TouchBar Lyric script')
     parser.add_argument('--app', default='Spotify',
                         choices=['Spotify', 'Music'], help='Music application')
+    parser.add_argument('--minimal', default='False',
+                        action='store_true', help='Remove title and artists')
     parser.add_argument('--debug', action='store_true',
                         help='Turn on debug mode', default=False)
 
     args = parser.parse_args()
-    main(app=args.app, debug=args.debug)
+    main(app=args.app, debug=args.debug, minimal=args.minimal)

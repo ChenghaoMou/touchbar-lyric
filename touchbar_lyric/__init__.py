@@ -8,6 +8,7 @@
 import base64
 import binascii
 import datetime
+import string
 import json
 import os
 import regex as re
@@ -426,7 +427,7 @@ def parse_line(line):
     return curr, words
 
 
-def parse(lyrics, position, duration, debug: bool = False):
+def parse(lyrics, position, duration, debug: bool = False, minimal: bool = False):
     if not lyrics:
         return ""
     song, lyric = lyrics[0]
@@ -445,12 +446,16 @@ def parse(lyrics, position, duration, debug: bool = False):
         lines = [line[-1] for line in lines]
 
         for start, end, words in zip(starts, ends, [""] + lines):
+            words = words.lower().capitalize()
+            words = re.sub(r", *", ", ", words).strip(string.punctuation + " ")
             if start <= position <= end:
+                if minimal:
+                    return words
                 return f"[{song.title}/{song.artists}] " + words
     return ""
 
 
-def main(app: str = "Spotify", debug: bool = False):
+def main(app: str = "Spotify", debug: bool = False, minimal: bool = False):
     if debug:
         logger.debug(names)
     application, artists, title, position, status, duration = get_info(
@@ -470,7 +475,7 @@ def main(app: str = "Spotify", debug: bool = False):
     else:
         songs = search(title, artists, debug=debug)
         lyrics = get_lyrics(songs, debug=debug)
-        words = parse(lyrics, position, duration, debug=debug)
+        words = parse(lyrics, position, duration, debug=debug, minimal=minimal)
         if words is not None:
             print(words)
         elif words is None:
