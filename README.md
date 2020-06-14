@@ -68,8 +68,8 @@ ${PYTHONPATH} -m touchbar_lyric --app Spotify
 
 ## Preview
 
-![Preview](./Preview1.png)
-![Preview](./Preview2.png)
+![Preview](./preview1.png)
+![Preview](./preview2.png)
 
 # 中文指南
 
