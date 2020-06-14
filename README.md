@@ -6,42 +6,15 @@
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based on the idea of [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301).
 
-\#Note:
-Only tested with Catalina. If you are on Mojave, please clone the repo and change the the following code:
-
-edit `touchbar_lyric/__init__.py`
-change the code in `get_info` (basically change `Music` to `iTunes`)
-
-```python
-else if application "Music" is running then
-    tell application "Music"
-        set currentInfo to {"Music", artist of current track, "###", name of current track, player position, player state, duration of current track}
-    end tell
-end if
-```
-
-to
-
-```python
-else if application "iTunes" is running then
-    tell application "iTunes"
-        set currentInfo to {"iTunes", artist of current track, "###", name of current track, player position, player state, duration of current track}
-    end tell
-end if
-```
-
-the execute the following command in the directory of the repo:
-
-```bash
-pip install --editable .
-```
 
 ## Features
 
 1.  Netease music web apis for **synced lyrics**;
 2.  cachier to **cache** function calls and reduce the need to call webapis;
 3.  Apple script for Spotify & iTunes/Music background track information;
-4.  Support for **English/Chinese**;
+4.  Support for **English/Chinese(Simplified)**;
+
+Note: Netease music itself is not supported as it does not support apple script now.
 
 ## Instruction
 
@@ -83,25 +56,26 @@ Same as Kashi:
 
 1.  Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
 2.  Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path in the script area;
-3.  Optional: You can use pubproxy api to remedy netease's anti-crawler mechanism.
+
 
 ```shell
-${PYTHONPATH} -m touchbar_lyric --api ${PUBPROXY_API}
+${PYTHONPATH} -m touchbar_lyric --app Music
 ```
-
-Where `--api ${PUBPROXY_API}` is optional.
+or use Spotify(default)
+```shell
+${PYTHONPATH} -m touchbar_lyric --app Spotify
+```
 
 ## Preview
 
-![Preview](./preview1.png)
-![Preview](./preview2.png)
+![Preview](./Preview1.png)
+![Preview](./Preview2.png)
 
-Note: In case there is no synced lyric, each sentence will be displayed at an evenly time interval.
 
 # 中文指南
 ## 背景知识
 
-- 脚本运行需要 BTT + Python3。
+- 脚本运行需要 BTT + Python3.6+。
 - 仅支持系统自带的 Music 和 Spotify，推荐使用 Spotify。
 
 ## Python 设置
