@@ -7,10 +7,12 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 ## Preview
 
 ### Minimal `--minimal`
+
 ![Preview](./preview1.png)
 ![Preview](./preview2.png)
 
 ### Full (default)
+
 ![Preview](./preview3.png)
 ![Preview](./preview4.png)
 
@@ -115,12 +117,15 @@ pip3 install touchbar_lyric
 -   可以更改参数 `fc`(RGB 字体颜色), `bg`(RGB 背景颜色), 和 `fs`(字体大小)
 
 ## 预览
+
 歌词信息按照 `[歌曲名/演唱者] 歌词` 格式，具体效果如图所示：
 
 ### 极简模式 `--minimal`
+
 ![Preview](./preview1.png)
 ![Preview](./preview2.png)
 
 ### 详细模式（默认）
+
 ![Preview](./preview3.png)
 ![Preview](./preview4.png)
