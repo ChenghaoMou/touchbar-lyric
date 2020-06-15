@@ -32,7 +32,7 @@
       "BTTTouchBarAlternateBackgroundColor": "0.000000, 0.000000, 0.000000, 255.000000",
       "BTTTBWidgetWidth": 400,
       "BTTTouchBarItemIconWidth": 22,
-      "BTTTouchBarShellScriptString": "/Users/chenghaomou/Anaconda/bin/python -m touchbar_lyric  --app Music",
+      "BTTTouchBarShellScriptString": "/Users/chenghaomou/Anaconda/bin/python -m touchbar_lyric  --app Music --minimal --bg 51,204,153 --fs 13 --fc 255,255,255",
       "BTTTouchBarButtonFontSize": 12,
       "BTTTouchBarFontColor": "156.000006, 226.000002, 90.000002, 255.000000",
       "BTTTouchBarButtonName": "Lyric",

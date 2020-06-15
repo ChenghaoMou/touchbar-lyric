@@ -23,6 +23,7 @@ from cachier import cachier
 from hanziconv import HanziConv
 from loguru import logger
 
+# Translate English names into pinyin
 translation: Dict[str, str] = {
     "Bella Yao": "贝拉姚",
     "A-fu": "阿福",
@@ -189,6 +190,16 @@ for en, zh in translation.items():
 
 
 def pinyinfy(name: str) -> str:
+    """
+    Returns the pinyin of the input name.
+
+    Args:
+        name (str): Input name string
+
+    Returns:
+        str: Pinyin or english of the input name
+
+    """
     return pinyin.get(name, delimiter='', format='strip').lower()
 
 
@@ -253,7 +264,7 @@ class NeteaseRequest:
         return binascii.hexlify(os.urandom(size))[:16]
 
     @classmethod
-    def request(cls, url: str, data: Dict[str, Any], method: str = "POST", debug: bool = False) -> Dict[str, Any]:
+    def request(cls, url: str, data: Dict[str, Any], method: str = "POST") -> Dict[str, Any]:
 
         results = {}
         status = requests.codes.ok
@@ -269,8 +280,7 @@ class NeteaseRequest:
             status = resp.status_code
         except Exception as e:
             results = {}
-            if debug:
-                logger.debug(e)
+            logger.debug(e)
 
         if status != requests.codes.ok or not text:
             results = {}
@@ -296,14 +306,14 @@ class NeteaseSong:
 
 
 @cachier(stale_after=datetime.timedelta(days=7))
-def get_lyric(idx, debug: bool = False) -> str:
+def get_lyric(idx) -> str:
     row_data = {"csrf_token": "", "id": idx, "lv": -1, "tv": -1}
     data = NeteaseRequest.encrypted_request(row_data)
-    return NeteaseRequest.request(url="https://music.163.com/weapi/song/lyric", method="POST", data=data, debug=debug).get("lrc", {}).get("lyric", "")
+    return NeteaseRequest.request(url="https://music.163.com/weapi/song/lyric", method="POST", data=data).get("lrc", {}).get("lyric", "")
 
 
 @cachier(stale_after=datetime.timedelta(days=3))
-def search(title, artists, debug: bool = False) -> List[NeteaseSong]:
+def search(title, artists) -> List[NeteaseSong]:
 
     eparams = {
         "method": "POST",
@@ -321,8 +331,8 @@ def search(title, artists, debug: bool = False) -> List[NeteaseSong]:
     )
     songs_list: List[NeteaseSong] = []
     backup: List[NeteaseSong] = []
-    if debug:
-        logger.debug(artists)
+
+    logger.debug(artists)
 
     # John Doe -> johndoe
     # 张三 -> zhangsan
@@ -354,13 +364,12 @@ def search(title, artists, debug: bool = False) -> List[NeteaseSong]:
             songs_list.append(song)
         else:
             backup.append(song)
-    if debug:
-        logger.debug([s.artists for s in songs_list])
-        logger.debug([s.artists for s in backup])
+    logger.debug([s.artists for s in songs_list])
+    logger.debug([s.artists for s in backup])
     return songs_list if songs_list else backup
 
 
-def get_lyrics(songs: List[NeteaseSong], debug: bool = False) -> List[Any]:
+def get_lyrics(songs: List[NeteaseSong]) -> List[Any]:
     """
     Retrieve a list of lyric from given songs.
 
@@ -373,13 +382,13 @@ def get_lyrics(songs: List[NeteaseSong], debug: bool = False) -> List[Any]:
     """
     results: List[Any] = []
     for song in songs[:3]:
-        lyric = get_lyric(idx=song.id, debug=debug)
+        lyric = get_lyric(idx=song.id)
         if lyric:
             results.append((song, lyric))
     return results
 
 
-def get_info(app: str = "Spotify", debug=False) -> Tuple[str, str, str, float, str, float]:
+def get_info(app: str = "Spotify") -> Tuple[str, str, str, float, str, float]:
     template = """
     on run
         if application "%s" is running then
@@ -393,8 +402,7 @@ def get_info(app: str = "Spotify", debug=False) -> Tuple[str, str, str, float, s
 
     code, res, error = osascript.run(template, background=False)
 
-    if debug:
-        logger.debug(res, error, code)
+    logger.debug(res, error, code)
     if res:
         meta1, meta2 = res.split('###')
         meta1, meta2 = meta1.strip(" ,"), meta2.strip(" ,")
@@ -427,13 +435,12 @@ def parse_line(line):
     return curr, words
 
 
-def parse(lyrics, position, duration, debug: bool = False, minimal: bool = False):
+def parse(lyrics, position, duration, minimal: bool = False):
     if not lyrics:
         return ""
     song, lyric = lyrics[0]
     for song, lyric in lyrics:
-        if debug:
-            logger.debug(song.title + "|" + song.artists)
+        logger.debug(song.title + "|" + song.artists)
         lines = [line for line in lyric.split('\n') if line.strip()]
 
         lines = list(map(parse_line, lines))
@@ -455,29 +462,35 @@ def parse(lyrics, position, duration, debug: bool = False, minimal: bool = False
     return ""
 
 
-def main(app: str = "Spotify", debug: bool = False, minimal: bool = False):
-    if debug:
-        logger.debug(names)
-    application, artists, title, position, status, duration = get_info(
-        app=app, debug=debug)
-    if debug:
-        logger.debug(
-            "|".join(map(str, (application, artists, title, position, status, duration))))
-    if any(x is None for x in (application, artists, title, position, status, duration)):
-        if debug:
-            logger.debug('Not playing')
+def main(app: str = "Spotify", minimal: bool = False, background_color: str = "51,204,153", font_color: str = "255,255,255", font_size: int = 12):
+
+    style = {
+        "text": "",
+        "background_color": background_color,
+        "font_color": font_color,
+        "font_size": font_size
+    }
+
+    meta = get_info(app=app)
+    logger.debug("|".join(map(str, meta)))
+
+    application, artists, title, position, status, duration = meta
+
+    if any(x is None for x in meta):
+        logger.debug('Not playing')
         return
 
     if status != 'playing':
-        if debug:
-            logger.debug('Paused')
+        logger.debug('Paused')
         return
     else:
-        songs = search(title, artists, debug=debug)
-        lyrics = get_lyrics(songs, debug=debug)
-        words = parse(lyrics, position, duration, debug=debug, minimal=minimal)
+        songs = search(title, artists)
+        lyrics = get_lyrics(songs)
+        words = parse(lyrics, position, duration, minimal=minimal)
         if words is not None:
-            print(words)
+            style["text"] = words
         elif words is None:
-            print(f'{application.title()} -- {title} -- {artists}')
-        return
+            style["text"] = f'{application.title()} -- {title} -- {artists}'
+        print(json.dumps(style))
+
+    return
