@@ -21,7 +21,7 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 1.  Netease music web apis for **synced lyrics**;
 2.  cachier to **cache** function calls and reduce the need to call webapis;
 3.  Apple script for Spotify & iTunes/Music background track information;
-4.  Support for **English/Chinese(Simplified)**;
+4.  Support for **English/Chinese(Simplified/Traditional)**;
 5.  Support background color, font color, and font size.
 
 ## Instruction
@@ -47,7 +47,7 @@ python3 get-pip.py
 You might want to restart your terminal.
 
 ```shell
-pip3 install touchbar_lyric
+pip3 install touchbar_lyric --upgrade
 ```
 
 ### Python Path
@@ -74,6 +74,13 @@ or use Spotify(default)
 
 ```shell
 ${PYTHONPATH} -m touchbar_lyric --app Spotify
+```
+
+Show Traditional Chinese lyrics
+
+
+```shell
+${PYTHONPATH} -m touchbar_lyric --app Spotify --traditional
 ```
 
 **You can also add `--minimal` flag at the end of the command to remove title and artists information.**
@@ -113,6 +120,7 @@ pip3 install touchbar_lyric
 -   复制 `lyric.json` 里面的内容，在BTT的Touch Bar 配置界面直接粘贴
 -   在右侧脚本区域， 把 `/Users/chenghaomou/Anaconda/bin/python` 换成第一步中的路径
 -   可以在命令最后添加 `--minimal` 只显示歌词信息
+-   可以在命令最后添加 `--traditional` 显示繁体歌词信息
 -   在 Spotify/Music 运行时，应该出现歌词挂件
 -   可以更改参数 `fc`(RGB 字体颜色), `bg`(RGB 背景颜色), 和 `fs`(字体大小)
 
