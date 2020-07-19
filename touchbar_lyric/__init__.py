@@ -414,11 +414,10 @@ def get_info(app: str = "Spotify") -> Tuple[str, str, str, float, str, float]:
 
         if float(duration) <= 1200:
             duration = float(duration)
-            position = float(position)
         else:
             duration = float(duration) / 3600
-            position = float(position)
-
+        
+        position = float(position)
         title = HanziConv.toSimplified(title)
         return application, artists, title, position, status, duration
     else:
@@ -462,7 +461,7 @@ def parse(lyrics, position, duration, minimal: bool = False):
     return ""
 
 
-def main(app: str = "Spotify", minimal: bool = False, background_color: str = "51,204,153", font_color: str = "255,255,255", font_size: int = 12):
+def main(app: str = "Spotify", minimal: bool = False, background_color: str = "51,204,153", font_color: str = "255,255,255", font_size: int = 12, traditional: bool = False):
 
     style = {
         "text": "",
@@ -488,9 +487,12 @@ def main(app: str = "Spotify", minimal: bool = False, background_color: str = "5
         lyrics = get_lyrics(songs)
         words = parse(lyrics, position, duration, minimal=minimal)
         if words is not None:
+            if traditional:
+                words = HanziConv.toTraditional(words)
             style["text"] = words
-        elif words is None:
+        else:
             style["text"] = f'{application.title()} -- {title} -- {artists}'
+        logger.debug(style)
         print(json.dumps(style))
 
     return

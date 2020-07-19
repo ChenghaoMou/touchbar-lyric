@@ -5,7 +5,6 @@
 
 
 import argparse
-import logging
 
 from loguru import logger
 from touchbar_lyric import main
@@ -22,6 +21,7 @@ if __name__ == '__main__':  # pragma: no cover
                         help='Font size')
     parser.add_argument('--fc', default='255,255,255',
                         type=str, help='Font color in RGB')
+    parser.add_argument('--traditional', default=False, action='store_true', help='Convert simplified chinese to traditional chinese')                   
     parser.add_argument('--verbose', action='store_true',
                         help='Turn on debug mode', default=False)
 
@@ -33,5 +33,10 @@ if __name__ == '__main__':  # pragma: no cover
         logger.disable("touchbar_lyric")
         logger.disable("__main__")
     logger.debug(args)
-    main(app=args.app, minimal=args.minimal, background_color=args.bg,
-         font_size=args.fs, font_color=args.fc)
+    main(
+        app=args.app, 
+        minimal=args.minimal, 
+        background_color=args.bg,
+        font_size=args.fs, 
+        font_color=args.fc,
+        traditional=args.traditional)
