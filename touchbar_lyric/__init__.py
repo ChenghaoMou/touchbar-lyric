@@ -13,7 +13,7 @@ from loguru import logger
 
 # Translate English names into pinyin
 translation: Dict[str, str] = {
-    re.sub(r"[\p{P} ]", "", en).lower(): zh.replace(" ", "")
+    re.sub(r"[\p{P} ]", "", en).lower(): pinyin.get(zh.replace(" ", ""), delimiter="", format="strip").lower().strip()
     for en, zh in {
         "Bella Yao": "贝拉姚",
         "A-fu": "阿福",
@@ -178,9 +178,9 @@ translation: Dict[str, str] = {
 
 
 class Song:
-    def __init__(self, title: str = None, artist: str = None, lyric: str = None):
+    def __init__(self, title: str = None, artists: str = None, lyric: str = None):
         self.title = title
-        self.artist = artist
+        self.artists = artists
         self.lyric = lyric
         self.lines = self.parse()
 
@@ -218,20 +218,27 @@ class Song:
                 low = mid
         return
 
-    def artist_text(self) -> List[str]:
-        if all(ord(c) < 256 for c in self.artist):
-            return self.artist
+    @staticmethod
+    def artist_text(artists: str) -> str:
         result = []
-        for name in self.artist.split(","):
+        for name in artists.split(","):
+            name = name.strip()
+            name = re.sub(r" +", " ", name)
+            alt = "".join(c for c in name if c.isalnum()).lower()
+            if alt in translation:
+                name = translation[alt]
             name = pinyin.get(name, delimiter="", format="strip").lower().strip()
             result.append(name)
         return ",".join(result)
 
-    def title_text(self) -> str:
-        return re.sub(r"[[《<(（【「{].*?[]】）」}>)》]", "", self.title).strip()
+    @staticmethod
+    def title_text(title) -> str:
+        text = re.sub(r"[[《<(（【「{].*?[]】）」}>)》]", "", title).strip()
+        text = re.sub(r"feat\..*?$", "", text, flags=re.IGNORECASE)
+        return text
 
     def __str__(self) -> str:
-        return f"{self.title} {self.artist}"
+        return f"{self.title} {self.artists}"
 
     def __repr__(self) -> str:
         return self.__str__()
@@ -260,7 +267,7 @@ def get_info(app: str = "Spotify") -> Tuple[str, str, float, str, float]:
             if duration <= 1200:
                 duration = duration
             else:
-                duration /= 3600
+                duration /= 1000
             title = HanziConv.toSimplified(title)
             title = re.sub(r"[[《<(（【「{].*?[]】）」}>)》]", "", title)
             title = title.rsplit("-", 1)[0]

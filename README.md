@@ -6,23 +6,15 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 
 ## Preview
 
-### Minimal `--minimal`
-
 ![Preview](./preview1.png)
 ![Preview](./preview2.png)
 
-### Full (default)
-
-![Preview](./preview3.png)
-![Preview](./preview4.png)
-
 ## Features
 
-1.  Netease music web apis for **synced lyrics**;
-2.  cachier to **cache** function calls and reduce the need to call webapis;
-3.  Apple script for Spotify & iTunes/Music background track information;
-4.  Support for **English/Chinese(Simplified/Traditional)**;
-5.  Support background color, font color, and font size.
+1.  **Synced lyrics**;
+2.  Support **Spotify** (Recommend) & **Music(Only your playlists)**;
+3.  Support for **English/Spanish/Chinese(Simplified/Traditional)/Japanese** and more;
+4.  Support background color, font color, and font size. And `rainbow` mode!
 
 ## Instruction
 
@@ -63,7 +55,7 @@ which python3
 Same as Kashi:
 
 1.  Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
-2.  Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path in the script area;
+2.  Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path `${PYTHONPATH}` in the script area;
 3.  Change any parameters as you like: `fc`(font color in RGB), `bg`(background color in RGB), and `fs`(font size)
 
 ```shell
@@ -83,7 +75,7 @@ Show Traditional Chinese lyrics
 ${PYTHONPATH} -m touchbar_lyric --app Spotify --traditional
 ```
 
-**You can also add `--minimal` flag at the end of the command to remove title and artists information.**
+**You can also add `--rainbow` flag at the end of the command to have a nice rainbow specturm as the background.**
 
 # 中文指南
 
@@ -117,23 +109,14 @@ pip3 install touchbar_lyric --upgrade
 
 ## BTT设置
 
--   复制 `lyric.json` 里面的内容，在BTT的Touch Bar 配置界面直接粘贴
+-   复制 `lyric.json` 里面的内容，在BTT的Touch Bar 配置界面**直接**粘贴
 -   在右侧脚本区域， 把 `/Users/chenghaomou/Anaconda/bin/python` 换成第一步中的路径
--   可以在命令最后添加 `--minimal` 只显示歌词信息
+-   可以在命令最后添加 `--rainbow` 现实彩虹渐变背景
 -   可以在命令最后添加 `--traditional` 显示繁体歌词信息
 -   在 Spotify/Music 运行时，应该出现歌词挂件
 -   可以更改参数 `fc`(RGB 字体颜色), `bg`(RGB 背景颜色), 和 `fs`(字体大小)
 
 ## 预览
 
-歌词信息按照 `[歌曲名/演唱者] 歌词` 格式，具体效果如图所示：
-
-### 极简模式 `--minimal`
-
 ![Preview](./preview1.png)
 ![Preview](./preview2.png)
-
-### 详细模式（默认）
-
-![Preview](./preview3.png)
-![Preview](./preview4.png)

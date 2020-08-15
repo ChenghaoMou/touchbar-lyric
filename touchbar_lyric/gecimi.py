@@ -65,7 +65,7 @@ def current(title: str, artists: str, timestamp: int, traditional: bool = False)
     if lyric is None:
         return None
 
-    return Song(title=title, artist=artists, lyric=lyric, traditional=traditional).current(timestamp=timestamp)
+    return Song(title=title, artists=artists, lyric=lyric, traditional=traditional).current(timestamp=timestamp)
 
 
 if __name__ == "__main__":

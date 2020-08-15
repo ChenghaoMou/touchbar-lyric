@@ -9,6 +9,7 @@ import base64
 import binascii
 import datetime
 import json
+import math
 import os
 from typing import Any, Dict, List
 
@@ -18,8 +19,8 @@ from cachier import cachier
 from Crypto.Cipher import AES
 from loguru import logger
 
-# from textdistance.algorithms.edit_based import levenshtein
 from touchbar_lyric import Song, get_info
+from touchbar_lyric.color import interpolate
 
 
 class NeteaseRequest:
@@ -108,7 +109,7 @@ class NeteaseRequest:
         return results
 
 
-@cachier(stale_after=datetime.timedelta(days=7))
+@cachier(stale_after=datetime.timedelta(days=30))
 def get_lyric(idx) -> str:
     data = NeteaseRequest.encrypted_request({"csrf_token": "", "id": idx, "lv": -1, "tv": -1})
     return (
@@ -118,13 +119,13 @@ def get_lyric(idx) -> str:
     )
 
 
-@cachier(stale_after=datetime.timedelta(days=3))
+@cachier(stale_after=datetime.timedelta(days=30))
 def search(title, artists) -> List[Song]:
 
     eparams = {
         "method": "POST",
         "url": "http://music.163.com/api/cloudsearch/pc",
-        "params": {"s": title, "type": 1, "offset": 0, "limit": 30},
+        "params": {"s": Song.title_text(title), "type": 1, "offset": 0, "limit": 30},
     }
     data = {"eparams": NeteaseRequest.encode_netease_data(eparams)}
 
@@ -134,23 +135,25 @@ def search(title, artists) -> List[Song]:
         .get("songs", {})
     )
     songs = []
-    for i, item in enumerate(res_data[:5]):
+    for i, item in enumerate(res_data[:3]):
         if item.get("id", None) is not None:
             s = Song(
                 title=item.get("name", ""),
-                artist=",".join([x["name"] for x in item.get("ar", []) if "name" in x]),
+                artists=",".join([x["name"] for x in item.get("ar", []) if "name" in x]),
                 lyric=get_lyric(idx=item["id"]),
             )
-            logger.debug(s.artist_text(), artists)
+            logger.debug(f"{item.get('id')} {Song.artist_text(s.artists)} VS {Song.artist_text(artists)}")
             songs.append(
                 (
-                    textdistance.levenshtein.distance(s.title_text(), title),
-                    textdistance.levenshtein.distance(s.artist_text(), artists),
+                    textdistance.levenshtein.distance(s.title, title),
+                    textdistance.levenshtein.distance(s.artists, artists),
+                    textdistance.levenshtein.distance(Song.title_text(s.title), title),
+                    textdistance.levenshtein.distance(Song.artist_text(s.artists), Song.artist_text(artists)),
                     i,
                     s,
                 )
             )
-    songs = sorted(songs, key=lambda x: (x[0], x[1], x[2]))
+    songs = sorted(songs, key=lambda x: x[:-1])
     return songs
 
 
@@ -160,7 +163,8 @@ def main(
     font_color: str = "255,255,255",
     font_size: int = 12,
     traditional: bool = False,
-    **kwargs
+    rainbow: bool = False,
+    **kwargs,
 ):
 
     style = {
@@ -170,7 +174,26 @@ def main(
         "font_size": font_size,
     }
 
-    title, artists, position, status, _ = get_info(app=app)
+    RAINBOW = [
+        ("148, 0, 211", "255,255,255"),
+        ("75, 0, 130", "255,255,255"),
+        ("0, 0, 255", "255,255,255"),
+        ("0, 255, 0", "0,0,0"),
+        ("255, 255, 0", "0,0,0"),
+        ("255, 127, 0", "255,255,255"),
+        ("255, 0 , 0", "255,255,255"),
+        ("0, 0, 0", "255,255,255"),
+    ]
+
+    title, artists, position, status, duration = get_info(app=app)
+
+    if rainbow:
+        steps = int(duration // 6)
+        base = math.floor(position / duration * 6)
+        delta = int(steps * (position / duration * 6 - base))
+        target = base + 1
+        style["background_color"] = interpolate(RAINBOW[base][0], RAINBOW[target][0], steps)[min(delta, steps - 1)]
+        style["font_color"] = interpolate(RAINBOW[base][1], RAINBOW[target][1], steps)[min(delta, steps - 1)]
 
     if status != "playing":
         logger.debug("Paused")
@@ -187,5 +210,4 @@ def main(
 
 
 if __name__ == "__main__":
-    # search.clear_cache()
     main()
