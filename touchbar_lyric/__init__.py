@@ -220,12 +220,12 @@ class Song:
 
     def artist_text(self) -> List[str]:
         if all(ord(c) < 256 for c in self.artist):
-            return self.artist.split(",")
+            return self.artist
         result = []
         for name in self.artist.split(","):
             name = pinyin.get(name, delimiter="", format="strip").lower().strip()
             result.append(name)
-        return result
+        return ",".join(result)
 
     def title_text(self) -> str:
         return re.sub(r"[[《<(（【「{].*?[]】）」}>)》]", "", self.title).strip()

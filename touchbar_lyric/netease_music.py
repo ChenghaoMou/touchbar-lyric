@@ -141,6 +141,7 @@ def search(title, artists) -> List[Song]:
                 artist=",".join([x["name"] for x in item.get("ar", []) if "name" in x]),
                 lyric=get_lyric(idx=item["id"]),
             )
+            logger.debug(s.artist_text(), artists)
             songs.append(
                 (
                     textdistance.levenshtein.distance(s.title_text(), title),
