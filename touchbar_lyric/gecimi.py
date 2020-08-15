@@ -15,7 +15,8 @@ from touchbar_lyric import Song
 
 @cachier(stale_after=datetime.timedelta(days=7),)
 def get_lyric(title: str, artists: str) -> str:
-    """Retrieve lyric from gecimi.com based on title and artists.
+    """
+    Retrieve lyric from gecimi.com based on title and artists.
 
     Parameters
     ----------
@@ -28,9 +29,7 @@ def get_lyric(title: str, artists: str) -> str:
     -------
     str
         Most poplular choice for the given title and artists
-
     """
-
     candidates = defaultdict(list)
     for artist in artists.split(","):
         try:
@@ -65,7 +64,7 @@ def current(title: str, artists: str, timestamp: int, traditional: bool = False)
     if lyric is None:
         return None
 
-    return Song(title=title, artists=artists, lyric=lyric, traditional=traditional).current(timestamp=timestamp)
+    return Song(title=title, artists=artists, lyric=lyric).current(timestamp=timestamp)
 
 
 if __name__ == "__main__":

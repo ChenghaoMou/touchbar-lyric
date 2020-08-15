@@ -5,9 +5,7 @@
 
 
 def interpolate_tuple(startcolor, goalcolor, steps):
-    """
-    Take two RGB color sets and mix them over a specified number of steps.  Return the list
-    """
+    """Take two RGB color sets and mix them over a specified number of steps."""
     # white
 
     R = startcolor[0]
@@ -36,9 +34,7 @@ def interpolate_tuple(startcolor, goalcolor, steps):
 
 
 def interpolate(startcolor, goalcolor, steps):
-    """
-    wrapper for interpolate_tuple that accepts colors as html ("#CCCCC" and such)
-    """
+    """Wrapper for interpolate_tuple that accepts colors."""
     start_tuple = list(map(int, startcolor.split(",")))
     goal_tuple = list(map(int, goalcolor.split(",")))
 

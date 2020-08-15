@@ -24,7 +24,6 @@ from touchbar_lyric.color import interpolate
 
 
 class NeteaseRequest:
-
     """A request wrapper for Netease music."""
 
     session = requests.Session()

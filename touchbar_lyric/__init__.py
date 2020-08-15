@@ -3,6 +3,8 @@
 # @Date    : 2020-03-10 10:54:37
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
+"""touchbar-lyric shows synced lyrics with BTT."""
+
 from typing import Dict, List, Tuple
 
 import osascript
@@ -179,6 +181,17 @@ translation: Dict[str, str] = {
 
 class Song:
     def __init__(self, title: str = None, artists: str = None, lyric: str = None):
+        """Abstract class for songs.
+
+        Parameters
+        ----------
+        title : str, optional
+            Name of the song, by default None
+        artists : str, optional
+            Name of the artists, by default None
+        lyric : str, optional
+            Lyric content, by default None
+        """
         self.title = title
         self.artists = artists
         self.lyric = lyric

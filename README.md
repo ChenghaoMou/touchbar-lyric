@@ -70,7 +70,6 @@ ${PYTHONPATH} -m touchbar_lyric --app Spotify
 
 Show Traditional Chinese lyrics
 
-
 ```shell
 ${PYTHONPATH} -m touchbar_lyric --app Spotify --traditional
 ```
