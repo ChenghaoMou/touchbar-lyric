@@ -181,7 +181,8 @@ translation: Dict[str, str] = {
 
 class Song:
     def __init__(self, title: str = None, artists: str = None, lyric: str = None):
-        """Abstract class for songs.
+        """
+        Abstract class for songs.
 
         Parameters
         ----------
