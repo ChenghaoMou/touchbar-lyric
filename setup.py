@@ -5,25 +5,16 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="touchbar-lyric",
-    version="0.3.6",
+    version="0.3.7",
     author="Chenghao",
-    python_requires='>3.6.0',
+    python_requires=">3.6.0",
     author_email="mouchenghao@gmail.com",
     description="Show time-synced lyric with BTT!",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ChenghaoMou/touchbar-lyric",
     packages=setuptools.find_packages(),
-    install_requires=[
-        'requests',
-        'osascript',
-        'cachier',
-        'hanziconv',
-        'pinyin',
-        'regex',
-        'loguru',
-        'pycrypto'
-    ],
+    install_requires=["requests", "osascript", "cachier", "hanziconv", "pinyin", "regex", "loguru", "pycrypto"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

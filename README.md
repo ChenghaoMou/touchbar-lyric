@@ -55,7 +55,7 @@ pip3 install touchbar_lyric --upgrade
 Take a note for the python3 path. We will refer it as `${PYTHONPATH}`
 
 ```shell
-whereis python3
+which python3
 ```
 
 ### 2. Configuration in BetterTouchTool
@@ -97,7 +97,7 @@ ${PYTHONPATH} -m touchbar_lyric --app Spotify --traditional
 -   检查 macOS 系统自带的 Python3 ，在系统自带的 Terminal 应用中输入以下命令
 
 ```bash
-whereis python3
+which python3
 ```
 
 \*返回输出的路径信息后面会使用
@@ -112,7 +112,7 @@ python3 get-pip.py
 -   安装 `touchbar-lyric`
 
 ```bash
-pip3 install touchbar_lyric
+pip3 install touchbar_lyric --upgrade
 ```
 
 ## BTT设置

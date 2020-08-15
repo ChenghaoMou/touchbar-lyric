@@ -6,3 +6,4 @@ cachier==1.2.6
 pycrypto==2.6.1
 regex==2020.6.8
 loguru==0.5.1
+textdistance==4.2.0
