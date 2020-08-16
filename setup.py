@@ -1,7 +1,6 @@
-import setuptools
+from pathlib import Path
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+import setuptools
 
 setuptools.setup(
     name="touchbar-lyric",
@@ -10,7 +9,7 @@ setuptools.setup(
     python_requires=">3.6.0",
     author_email="mouchenghao@gmail.com",
     description="Show time-synced lyric with BTT!",
-    long_description=long_description,
+    long_description=Path("README.md").read_text(),
     long_description_content_type="text/markdown",
     url="https://github.com/ChenghaoMou/touchbar-lyric",
     packages=setuptools.find_packages(),
