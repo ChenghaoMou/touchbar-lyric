@@ -33,7 +33,7 @@ def qmusic_search(title: str, artists: str) -> List[Song]:
 
     Examples
     --------
-    >>> len(search("海阔天空", "Beyond")) > 0
+    >>> len(qmusic_search("海阔天空", "Beyond")) > 0
     True
     """
     response = QQMusic.search(title)
@@ -41,7 +41,7 @@ def qmusic_search(title: str, artists: str) -> List[Song]:
     for i, song in enumerate(response.data[:3]):
         lyric = song.lyric
         lyric.extract()
-        print(lyric.lyric)
+        # print(lyric.lyric)
         if lyric.lyric or lyric.trans:
             content = lyric.lyric or lyric.trans
             s = Song(title=song.name, artists=",".join([x.name for x in song.singer]), lyric=content.replace("&apos;", "'"),)
