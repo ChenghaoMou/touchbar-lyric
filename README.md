@@ -20,7 +20,7 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase APIs. Based 
 
 ### 1. Denpendencies
 
-First check your macOS python (the programming language this plugin is written in) version, which should be 3.6+. All commands should be executed in your terminal.
+First check your macOS python (the programming language this plugin is written in) version, which should be 3.7+. All commands should be executed in your terminal.
 
 ```shell
 python3 --version
@@ -81,7 +81,7 @@ You can also add `--rainbow` flag at the end of the command to have a nice rainb
 
 ## 背景知识
 
--   脚本运行需要 BTT + Python3.6+。
+-   脚本运行需要 BTT + Python3.7+。
 -   仅支持系统自带的 Music 和 Spotify，推荐使用 Spotify。
 
 ## Python 设置
