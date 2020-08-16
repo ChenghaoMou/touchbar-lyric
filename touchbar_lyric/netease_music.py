@@ -20,6 +20,7 @@ from Crypto.Cipher import AES
 from loguru import logger
 
 from touchbar_lyric import Song, get_info, interpolate
+from touchbar_lyric.qq_music import qmusic_search
 
 
 class NeteaseRequest:  # pragma: no cover
@@ -217,6 +218,9 @@ def main(
         return
     else:
         songs = search(title, artists)
+        backup = qmusic_search(title, artists)
+        songs.extend(backup)
+        songs = sorted(songs, key=lambda x: x[:-1])
         logger.debug(songs)
         for *_, song in songs:
             if song.current(position, traditional=traditional):
@@ -227,4 +231,5 @@ def main(
 
 
 if __name__ == "__main__":  # pragma: no cover
+    # search.clear_cache()
     main()

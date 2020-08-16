@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="touchbar-lyric",
-    version="0.4.3",
+    version="0.5.0",
     author="Chenghao",
     python_requires=">3.7.0",
     author_email="mouchenghao@gmail.com",
@@ -24,6 +24,7 @@ setuptools.setup(
         "pycrypto",
         "textdistance",
         "numpy",
+        "qqmusic-api",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

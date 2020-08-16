@@ -8,3 +8,4 @@ regex==2020.6.8
 loguru==0.5.1
 textdistance==4.2.0
 numpy==1.19.1
+qqmusic-api==0.1
