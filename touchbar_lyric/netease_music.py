@@ -19,11 +19,10 @@ from cachier import cachier
 from Crypto.Cipher import AES
 from loguru import logger
 
-from touchbar_lyric import Song, get_info
-from touchbar_lyric.color import interpolate
+from touchbar_lyric import Song, get_info, interpolate
 
 
-class NeteaseRequest:
+class NeteaseRequest:  # pragma: no cover
     """A request wrapper for Netease music."""
 
     session = requests.Session()
@@ -108,7 +107,7 @@ class NeteaseRequest:
         return results
 
 
-@cachier(stale_after=datetime.timedelta(days=30))
+@cachier(stale_after=datetime.timedelta(days=30))  # pragma: no cover
 def get_lyric(idx) -> str:
     data = NeteaseRequest.encrypted_request({"csrf_token": "", "id": idx, "lv": -1, "tv": -1})
     return (
@@ -119,7 +118,27 @@ def get_lyric(idx) -> str:
 
 
 @cachier(stale_after=datetime.timedelta(days=30))
-def search(title, artists) -> List[Song]:
+def search(title: str, artists: str) -> List[Song]:
+    """
+    Search from Netease Music with artists and title.
+
+    Parameters
+    ----------
+    title : str
+        Name of the song
+    artists : str
+        Names of the artists
+
+    Returns
+    -------
+    List[Song]
+        List of songs
+
+    Examples
+    --------
+    >>> len(search("海阔天空", "Beyond")) > 0
+    True
+    """
 
     eparams = {
         "method": "POST",
@@ -164,8 +183,7 @@ def main(
     traditional: bool = False,
     rainbow: bool = False,
     **kwargs,
-):
-
+):  # pragma: no cover
     style = {
         "text": "",
         "background_color": background_color,
@@ -208,5 +226,5 @@ def main(
     return
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

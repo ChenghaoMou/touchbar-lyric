@@ -182,16 +182,20 @@ translation: Dict[str, str] = {
 class Song:
     def __init__(self, title: str = None, artists: str = None, lyric: str = None):
         """
-        Abstract class for songs.
+        Abstraction class for a song.
 
         Parameters
         ----------
         title : str, optional
-            Name of the song, by default None
+            Name of the sonng, by default None
         artists : str, optional
-            Name of the artists, by default None
+            Names of the artists, by default None
         lyric : str, optional
-            Lyric content, by default None
+            String content of the lyric, by default None
+
+        Examples
+        --------
+        >>> song = Song("test", "singer", "[00:01.12]Hello world!")
         """
         self.title = title
         self.artists = artists
@@ -199,6 +203,20 @@ class Song:
         self.lines = self.parse()
 
     def parse(self) -> List[Tuple[Tuple[float, float], str]]:
+        """
+        Parse the lyric string into a list of interval ans line pairs.
+
+        Returns
+        -------
+        List[Tuple[Tuple[float, float], str]]
+            List of interval ans line pairs
+
+        Examples
+        --------
+        >>> song = Song("test", "singer", "[00:01.12]Hello world!")
+        >>> song.parse()
+        [((1.012, inf), 'Hello world!')]
+        """
         lines: List[str] = [line.strip() for line in self.lyric.split("\n") if line.strip()]
         result: List[Tuple[float, str]] = []
         for line in lines:
@@ -219,6 +237,29 @@ class Song:
         return intervals
 
     def current(self, timestamp: int, traditional: bool = False) -> str:
+        """
+        Find the current line in the lyrics.
+
+        Parameters
+        ----------
+        timestamp : int
+            Current timestamp
+        traditional : bool, optional
+            Convert the line into traditional Chinese or not, by default False
+
+        Returns
+        -------
+        str
+            A line in the lyrics
+
+        Examples
+        --------
+        >>> song = Song("test", "singer", "[00:01.12]原谅我这一生不羁放纵爱自由")
+        >>> song.current(2)
+        '原谅我这一生不羁放纵爱自由'
+        >>> song.current(2, True)
+        '原諒我這一生不羈放縱愛自由'
+        """
         low, high = 0, len(self.lines)
         while low < high:
             mid = (low + high) // 2
@@ -234,6 +275,28 @@ class Song:
 
     @staticmethod
     def artist_text(artists: str) -> str:
+        """
+        Return cleaned artists names.
+
+        Parameters
+        ----------
+        artists : str
+            Names of artists
+
+        Returns
+        -------
+        str
+            Cleaned up names
+
+        Examples
+        --------
+        >>> Song.artist_text('Jay Chou')
+        'zhoujielun'
+        >>> Song.artist_text('The Wanted')
+        'the wanted'
+        >>> Song.artist_text('周杰伦')
+        'zhoujielun'
+        """
         result = []
         for name in artists.split(","):
             name = name.strip()
@@ -247,18 +310,56 @@ class Song:
 
     @staticmethod
     def title_text(title) -> str:
+        """
+        Return cleaned title.
+
+        Parameters
+        ----------
+        title : [type]
+            Original song title
+
+        Returns
+        -------
+        str
+            Cleaned up title
+
+        Examples
+        --------
+        >>> Song.title_text("南山南（原唱 马頔）")
+        '南山南'
+        """
         text = re.sub(r"[[《<(（【「{].*?[]】）」}>)》]", "", title).strip()
         text = re.sub(r"feat\..*?$", "", text, flags=re.IGNORECASE)
         return text
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # pragma: no cover
         return f"{self.title} {self.artists}"
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # pragma: no cover
         return self.__str__()
 
 
 def get_info(app: str = "Spotify") -> Tuple[str, str, float, str, float]:
+    """
+    Get information about the track in play.
+
+    Parameters
+    ----------
+    app : str, optional
+        Name of the app, by default "Spotify"
+
+    Returns
+    -------
+    Tuple[str, str, float, str, float]
+        Title, artists, position, status, duration of the track
+
+    Examples
+    --------
+    >>> title, artists, position, status, duration = get_info("Spotify")
+    >>> status in [None, "playing", "paused"]
+    True
+    """
+
     template = f"""
     on run
         if application "{app}" is running then
@@ -289,6 +390,39 @@ def get_info(app: str = "Spotify") -> Tuple[str, str, float, str, float]:
         logger.debug(error)
 
     return title, artists, position, status, duration
+
+
+def interpolate(start: str, goal: str, steps: int = 10) -> List[str]:
+    """
+    Generate gradient colors from start to goal.
+
+    Parameters
+    ----------
+    start : str
+        Start color in RGB format. e.g 255,255,255
+    goal : str
+        Goal color in RGB format. e.g 0,0,0
+    steps : int, optional
+        Number of steps, by default 10
+
+    Returns
+    -------
+    List[str]
+        List of colors
+
+    Examples
+    --------
+    >>> interpolate("0,0,0", "255,255,255", 5)
+    ['0,0,0', '51,51,51', '102,102,102', '153,153,153', '204,204,204', '255,255,255']
+    """
+    R, G, B = list(map(int, start.split(",")))
+    targetR, targetG, targetB = list(map(int, goal.split(",")))
+    diffR, diffG, diffB = targetR - R, targetG - G, targetB - B
+
+    return [
+        f"{int(R + (diffR * i / steps))},{int(G + (diffG * i / steps))},{int(B + (diffB * i / steps))}"
+        for i in range(steps + 1)
+    ]
 
 
 if __name__ == "__main__":

@@ -106,3 +106,5 @@ venv.bak/
 
 .codacy-coverage
 cobertura.xml
+.isort.cfg
+.pre-commit-config.yaml
