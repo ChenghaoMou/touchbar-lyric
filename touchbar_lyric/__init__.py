@@ -14,7 +14,7 @@ from hanziconv import HanziConv
 from loguru import logger
 
 # Translate English names into pinyin
-translation: Dict[str, str] = {
+TRANSLATION: Dict[str, str] = {
     re.sub(r"[\p{P} ]", "", en).lower(): pinyin.get(zh.replace(" ", ""), delimiter="", format="strip").lower().strip()
     for en, zh in {
         "Bella Yao": "贝拉姚",
@@ -178,6 +178,18 @@ translation: Dict[str, str] = {
     }.items()
 }
 
+# Rainbow color gradients
+RAINBOW: List[Tuple[str, str]] = [
+    ("148, 0, 211", "255,255,255"),
+    ("75, 0, 130", "255,255,255"),
+    ("0, 0, 255", "255,255,255"),
+    ("0, 255, 0", "0,0,0"),
+    ("255, 255, 0", "0,0,0"),
+    ("255, 127, 0", "255,255,255"),
+    ("255, 0 , 0", "255,255,255"),
+    ("0, 0, 0", "255,255,255"),
+]
+
 
 class Song:
     def __init__(self, title: str = None, artists: str = None, lyric: str = None):
@@ -302,8 +314,8 @@ class Song:
             name = name.strip()
             name = re.sub(r" +", " ", name)
             alt = "".join(c for c in name if c.isalnum()).lower()
-            if alt in translation:
-                name = translation[alt]
+            if alt in TRANSLATION:
+                name = TRANSLATION[alt]
             name = pinyin.get(name, delimiter="", format="strip").lower().strip()
             result.append(name)
         return ",".join(result)
@@ -423,8 +435,3 @@ def interpolate(start: str, goal: str, steps: int = 10) -> List[str]:
         f"{int(R + (diffR * i / steps))},{int(G + (diffG * i / steps))},{int(B + (diffB * i / steps))}"
         for i in range(steps + 1)
     ]
-
-
-if __name__ == "__main__":
-
-    print(get_info("Music"))

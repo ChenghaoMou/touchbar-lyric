@@ -20,7 +20,7 @@ from Crypto.Cipher import AES
 from loguru import logger
 
 from touchbar_lyric import Song, get_info, interpolate
-from touchbar_lyric.qq_music import qmusic_search
+from touchbar_lyric.qq_music import qq_music_search
 
 
 class NeteaseRequest:  # pragma: no cover
@@ -109,7 +109,7 @@ class NeteaseRequest:  # pragma: no cover
 
 
 @cachier(stale_after=datetime.timedelta(days=30))  # pragma: no cover
-def get_lyric(idx) -> str:
+def netease_music_get_lyric(idx) -> str:
     data = NeteaseRequest.encrypted_request({"csrf_token": "", "id": idx, "lv": -1, "tv": -1})
     return (
         NeteaseRequest.request(url="https://music.163.com/weapi/song/lyric", method="POST", data=data)
@@ -119,7 +119,7 @@ def get_lyric(idx) -> str:
 
 
 @cachier(stale_after=datetime.timedelta(days=30))
-def search(title: str, artists: str) -> List[Song]:
+def netease_music_search(title: str, artists: str) -> List[Song]:
     """
     Search from Netease Music with artists and title.
 
@@ -159,7 +159,7 @@ def search(title: str, artists: str) -> List[Song]:
             s = Song(
                 title=item.get("name", ""),
                 artists=",".join([x["name"] for x in item.get("ar", []) if "name" in x]),
-                lyric=get_lyric(idx=item["id"]),
+                lyric=netease_music_get_lyric(idx=item["id"]),
             )
             logger.debug(f"{item.get('id')} {Song.artist_text(s.artists)} VS {Song.artist_text(artists)}")
             songs.append(
@@ -174,62 +174,3 @@ def search(title: str, artists: str) -> List[Song]:
             )
     songs = sorted(songs, key=lambda x: x[:-1])
     return songs
-
-
-def main(
-    app: str = "Spotify",
-    background_color: str = "51,204,153",
-    font_color: str = "255,255,255",
-    font_size: int = 12,
-    traditional: bool = False,
-    rainbow: bool = False,
-    **kwargs,
-):  # pragma: no cover
-    style = {
-        "text": "",
-        "background_color": background_color,
-        "font_color": font_color,
-        "font_size": font_size,
-    }
-
-    RAINBOW = [
-        ("148, 0, 211", "255,255,255"),
-        ("75, 0, 130", "255,255,255"),
-        ("0, 0, 255", "255,255,255"),
-        ("0, 255, 0", "0,0,0"),
-        ("255, 255, 0", "0,0,0"),
-        ("255, 127, 0", "255,255,255"),
-        ("255, 0 , 0", "255,255,255"),
-        ("0, 0, 0", "255,255,255"),
-    ]
-
-    title, artists, position, status, duration = get_info(app=app)
-
-    if rainbow:
-        steps = int(duration // 6)
-        base = math.floor(position / duration * 6)
-        delta = int(steps * (position / duration * 6 - base))
-        target = base + 1
-        style["background_color"] = interpolate(RAINBOW[base][0], RAINBOW[target][0], steps)[min(delta, steps - 1)]
-        style["font_color"] = interpolate(RAINBOW[base][1], RAINBOW[target][1], steps)[min(delta, steps - 1)]
-
-    if status != "playing":
-        logger.debug("Paused")
-        return
-    else:
-        songs = search(title, artists)
-        backup = qmusic_search(title, artists)
-        songs.extend(backup)
-        songs = sorted(songs, key=lambda x: x[:-1])
-        logger.debug(songs)
-        for *_, song in songs:
-            if song.current(position, traditional=traditional):
-                style["text"] = song.current(position, traditional=traditional).strip()
-                print(json.dumps(style))
-                return
-    return
-
-
-if __name__ == "__main__":  # pragma: no cover
-    # search.clear_cache()
-    main()

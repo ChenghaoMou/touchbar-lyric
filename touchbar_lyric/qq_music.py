@@ -15,7 +15,7 @@ from touchbar_lyric import Song
 
 
 @cachier(stale_after=datetime.timedelta(days=30))
-def qmusic_search(title: str, artists: str) -> List[Song]:
+def qq_music_search(title: str, artists: str) -> List[Song]:
     """
     Search from Netease Music with artists and title.
 
@@ -41,7 +41,6 @@ def qmusic_search(title: str, artists: str) -> List[Song]:
     for i, song in enumerate(response.data[:3]):
         lyric = song.lyric
         lyric.extract()
-        # print(lyric.lyric)
         if lyric.lyric or lyric.trans:
             content = lyric.lyric or lyric.trans
             s = Song(title=song.name, artists=",".join([x.name for x in song.singer]), lyric=content.replace("&apos;", "'"),)
@@ -58,9 +57,3 @@ def qmusic_search(title: str, artists: str) -> List[Song]:
             )
     songs = sorted(songs, key=lambda x: x[:-1])
     return songs
-
-
-if __name__ == "__main__":
-
-    songs = qmusic_search("海阔天空", "Beyond")
-    print(songs)

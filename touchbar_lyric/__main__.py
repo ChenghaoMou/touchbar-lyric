@@ -5,10 +5,14 @@
 
 
 import argparse
+import json
+import math
 
 from loguru import logger
 
-from touchbar_lyric.netease_music import main
+from touchbar_lyric import RAINBOW, get_info, interpolate
+from touchbar_lyric.netease_music import netease_music_search
+from touchbar_lyric.qq_music import qq_music_search
 
 if __name__ == "__main__":  # pragma: no cover
     parser = argparse.ArgumentParser("TouchBar Lyric Script for BTT")
@@ -37,12 +41,34 @@ if __name__ == "__main__":  # pragma: no cover
 
     logger.debug(args)
 
-    main(
-        app=args.app,
-        minimal=args.minimal,
-        rainbow=args.rainbow,
-        background_color=args.bg,
-        font_size=args.fs,
-        font_color=args.fc,
-        traditional=args.traditional,
-    )
+    style = {
+        "text": "",
+        "background_color": args.bg,
+        "font_color": args.fc,
+        "font_size": args.fs,
+    }
+
+    title, artists, position, status, duration = get_info(app=args.app)
+
+    if args.rainbow:
+        steps = int(duration // 6)
+        base = math.floor(position / duration * 6)
+        delta = int(steps * (position / duration * 6 - base))
+        target = base + 1
+        style["background_color"] = interpolate(RAINBOW[base][0], RAINBOW[target][0], steps)[min(delta, steps - 1)]
+        style["font_color"] = interpolate(RAINBOW[base][1], RAINBOW[target][1], steps)[min(delta, steps - 1)]
+
+    if status != "playing":
+        logger.debug("Paused")
+    else:
+        songs = netease_music_search(title, artists)
+        backup = qq_music_search(title, artists)
+        songs.extend(backup)
+        songs = sorted(songs, key=lambda x: x[:-1])
+        logger.debug(songs)
+        for *_, song in songs:
+            line = song.current(position, traditional=args.traditional)
+            if line:
+                style["text"] = line.strip()
+                print(json.dumps(style))
+                break
