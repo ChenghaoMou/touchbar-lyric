@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="touchbar-lyric",
-    version="0.5.1",
+    version="0.5.2",
     author="Chenghao",
     python_requires=">3.7.0",
     author_email="mouchenghao@gmail.com",
