@@ -137,7 +137,7 @@ def netease_music_search(title: str, artists: str) -> List[Song]:
 
     Examples
     --------
-    >>> len(search("海阔天空", "Beyond")) > 0
+    >>> len(netease_music_search("海阔天空", "Beyond")) > 0
     True
     """
 

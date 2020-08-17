@@ -33,7 +33,7 @@ def qq_music_search(title: str, artists: str) -> List[Song]:
 
     Examples
     --------
-    >>> len(qmusic_search("海阔天空", "Beyond")) > 0
+    >>> len(qq_music_search("海阔天空", "Beyond")) > 0
     True
     """
     response = QQMusic.search(title)
