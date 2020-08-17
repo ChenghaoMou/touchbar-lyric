@@ -9,7 +9,6 @@ import base64
 import binascii
 import datetime
 import json
-import math
 import os
 from typing import Any, Dict, List
 
@@ -19,8 +18,7 @@ from cachier import cachier
 from Crypto.Cipher import AES
 from loguru import logger
 
-from touchbar_lyric import Song, get_info, interpolate
-from touchbar_lyric.qq_music import qq_music_search
+from touchbar_lyric import Song
 
 
 class NeteaseRequest:  # pragma: no cover

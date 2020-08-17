@@ -11,10 +11,10 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase/QQ Music API
 
 ## Features
 
-- **Synced lyrics**;
-- Support **Spotify** (Recommend) & **Music(Only your playlists)**;
-- Support for **English/Spanish/Chinese(Simplified/Traditional)/Japanese** and more;
-- Support background color, font color, and font size configuration. And `rainbow` mode!
+-   **Synced lyrics**;
+-   Support **Spotify** (Recommend) & **Music(Only your playlists)**;
+-   Support for **English/Spanish/Chinese(Simplified/Traditional)/Japanese** and more;
+-   Support background color, font color, and font size configuration. And `rainbow` mode!
 
 ## Instruction
 
