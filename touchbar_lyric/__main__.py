@@ -20,12 +20,13 @@ if __name__ == "__main__":  # pragma: no cover
         "--app", default="Spotify", choices=["Spotify", "Music"], help="Music application. Spotify has a better support",
     )
 
-    parser.add_argument("--rainbow", default=False, action="store_true", help="Rainbow backgroud colors")
+    parser.add_argument("--rainbow", default=False, action="store_true", help="Rainbow background colors")
     parser.add_argument("--minimal", default=False, action="store_true", help="Deprecated")
     parser.add_argument(
         "--traditional", default=False, action="store_true", help="Use traditional Chinese",
     )
     parser.add_argument("--verbose", action="store_true", help="Turn on debug mode", default=False)
+    parser.add_argument("--accurate", action="store_true", help="Turn on accurate mode, skipping less ideal matches", default=False)
 
     parser.add_argument("--bg", default="51,204,153", type=str, help="Background color in RGB")
     parser.add_argument("--fs", default=12, type=int, help="Font size")
@@ -65,6 +66,9 @@ if __name__ == "__main__":  # pragma: no cover
         backup = qq_music_search(title, artists)
         songs.extend(backup)
         songs = sorted(songs, key=lambda x: x[:-1])
+        logger.debug(songs)
+        if args.accurate:
+            songs = [s for s in songs if s[0] == 0 and s[1] <= 3]
         logger.debug(songs)
         for *_, song in songs:
             line = song.current(position, traditional=args.traditional)

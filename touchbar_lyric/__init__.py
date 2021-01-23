@@ -199,7 +199,7 @@ class Song:
         Parameters
         ----------
         title : str, optional
-            Name of the sonng, by default None
+            Name of the song, by default None
         artists : str, optional
             Names of the artists, by default None
         lyric : str, optional

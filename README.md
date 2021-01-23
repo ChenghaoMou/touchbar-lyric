@@ -18,7 +18,7 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase/QQ Music API
 
 ## Instruction
 
-### 1. Denpendencies
+### 1. Dependencies
 
 First check your macOS python (the programming language this plugin is written in) version, which should be 3.7+. All commands should be executed in your terminal.
 
@@ -73,9 +73,15 @@ Show Traditional Chinese lyrics
 ${PYTHONPATH} -m touchbar_lyric --app Spotify --traditional
 ```
 
+Use accurate mode to skip less ideal matches
+
+```shell
+${PYTHONPATH} -m touchbar_lyric --accurate
+```
+
 You can also add `--rainbow` flag at the end of the command to have a nice rainbow specturm as the background.
 
-**Becareful with typing double slash in BTT. It automatically change it to long slash. Use copy & paste instead!**
+**Be careful with typing double hyphens in BTT. It automatically change it to em slash. Use copy & paste instead!**
 
 # 中文指南
 
@@ -113,5 +119,6 @@ pip3 install touchbar_lyric --upgrade
 -   在右侧脚本区域， 把 `/Users/chenghaomou/Anaconda/bin/python` 换成第一步中的路径
 -   可以在命令最后添加 `--rainbow` 使用彩虹渐变背景
 -   可以在命令最后添加 `--traditional` 显示繁体歌词信息
+-   可以在命令最后添加 `--accurate` 忽略匹配度较差的歌词
 -   在 Spotify/Music 运行时，应该出现歌词挂件
 -   可以更改参数 `fc`(RGB 字体颜色), `bg`(RGB 背景颜色), 和 `fs`(字体大小)
