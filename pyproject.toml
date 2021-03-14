@@ -1,16 +1,23 @@
-[tool.black]
-line-length = 128
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+[tool.poetry]
+name = "touchbar-lyric"
+version = "0.6.1"
+description = "Display lyrics on your touchbar with BTT"
+authors = ["Chenghao Mou <mouchenghao@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+applescript = "^2021.2.9"
+qqmusic-api = "^0.1"
+cachier = "^1.5.0"
+typer = "^0.3.2"
+loguru = "^0.5.3"
+strsimpy = "^0.2.0"
+coverage = "^5.5"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
