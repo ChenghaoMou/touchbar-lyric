@@ -31,7 +31,7 @@ def get_info(app: str) -> Optional[MediaInformation]:
     >>> assert ans is None or isinstance(ans, MediaInformation)
     """    
 
-    script: str = """
+    script: str = f"""
     on run
         if application "{app}" is running then
             tell application "{app}"

@@ -146,7 +146,7 @@ def netease_music_search(title: str, artists: str) -> List[Song]:
     res_data = (
         NeteaseRequest.request("http://music.163.com/api/linux/forward", method="POST", data=data)
         .get("result", {})
-        .get("songs", {})
+        .get("songs", [])
     )
     songs = []
     for i, item in enumerate(res_data[:3]):

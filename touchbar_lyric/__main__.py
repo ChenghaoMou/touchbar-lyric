@@ -4,6 +4,7 @@
 # @Author  : Chenghao Mou (chenghao@gmail.com)
 
 import typer
+import opencc
 
 from loguru import logger
 from touchbar_lyric.utility import get_info
@@ -11,7 +12,8 @@ from touchbar_lyric.service import universal_search
 
 def run(
     app: str = typer.Option(default="Spotify", help="Application to track"),
-    debug: bool = typer.Option(default=False, is_flag=True, help="To show debug messages or not")
+    debug: bool = typer.Option(default=False, is_flag=True, help="To show debug messages or not"),
+    traditional: bool = typer.Option(default=False, is_flag=True, help="Translate lyrics into Traditional Chinese if possible")
 ): # pragma: no cover
     {
         True: logger.enable,
@@ -21,11 +23,16 @@ def run(
     media_info = get_info(app)
     if media_info is None:
         return
+
+    converter = opencc.OpenCC('s2t.json')
     
     songs = universal_search(media_info.name, media_info.artists)
     for song in songs:
         if song.anchor(media_info.position):
-            print(song.anchor(media_info.position))
+            line: str = song.anchor(media_info.position)
+            if traditional:
+                line = converter.convert(line)
+            print(line)
             break
 
 if __name__ == "__main__": # pragma: no cover

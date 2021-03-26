@@ -89,6 +89,14 @@ win32-setctime = {version = ">=1.0.0", markers = "sys_platform == \"win32\""}
 dev = ["codecov (>=2.0.15)", "colorama (>=0.3.4)", "flake8 (>=3.7.7)", "tox (>=3.9.0)", "tox-travis (>=0.12)", "pytest (>=4.6.2)", "pytest-cov (>=2.7.1)", "Sphinx (>=2.2.1)", "sphinx-autobuild (>=0.7.1)", "sphinx-rtd-theme (>=0.4.3)", "black (>=19.10b0)", "isort (>=5.1.1)"]
 
 [[package]]
+name = "opencc"
+version = "1.1.2"
+description = "Conversion between Traditional and Simplified Chinese"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pathtools"
 version = "0.1.2"
 description = "File system general utilities"
@@ -212,7 +220,7 @@ dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b1b5c0ac0d8ff22f6b4fc082d7c01fb18919214fe9668b84c266d24ffda8b5b5"
+content-hash = "abe7e3b4bf53254d297cc52cda158187fb27a483e15d16924ce26f8e9b72a8c4"
 
 [metadata.files]
 applescript = [
@@ -299,6 +307,20 @@ idna = [
 loguru = [
     {file = "loguru-0.5.3-py3-none-any.whl", hash = "sha256:f8087ac396b5ee5f67c963b495d615ebbceac2796379599820e324419d53667c"},
     {file = "loguru-0.5.3.tar.gz", hash = "sha256:b28e72ac7a98be3d28ad28570299a393dfcd32e5e3f6a353dec94675767b6319"},
+]
+opencc = [
+    {file = "OpenCC-1.1.2-cp27-cp27m-macosx_10_9_arm64.whl", hash = "sha256:82e76828df3bd3c7e450de2bb7eafb738692225fdcce4150f3d7cb5ff7871f9e"},
+    {file = "OpenCC-1.1.2-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:287b42a7011fdfb10a07ba8a2f50b50c13b408f2834544c64e37f147a04a4e74"},
+    {file = "OpenCC-1.1.2-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:95eba60ce376aef96666650abb5e08e8ac5b97fd77e35a2b652609229a901865"},
+    {file = "OpenCC-1.1.2-cp35-cp35m-macosx_10_9_x86_64.whl", hash = "sha256:607d1082e3c9bfd618b59b39046da72d3571f74271d85f8b1cd1ea4ebb2ceb7b"},
+    {file = "OpenCC-1.1.2-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:9af690749eceef1dba21eac9d167c98fadc834dfabdb404b38b0438fc8444df8"},
+    {file = "OpenCC-1.1.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:e3abe5926f45d83a77f888d0fe38924407ffa7d04812aa577a2eab2db7b97a1c"},
+    {file = "OpenCC-1.1.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:8d47dcd65c2f322b3153882bdea88b8cbc45faec1f5ea7b1a044a523f02afac7"},
+    {file = "OpenCC-1.1.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:071939024231edc9eab8243555671f8def23bde978dcdbe01fa747701aba5dc3"},
+    {file = "OpenCC-1.1.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:8aefe6b6097f3696444d2e753c64663756597fddd4aa8d120a06f2ab124551ab"},
+    {file = "OpenCC-1.1.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:fefebdc24ca8eb2656103d101a21639e9759c5e54012c355805a9cdf85bb4eda"},
+    {file = "OpenCC-1.1.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:31d08223a53422884546ac81f81ad41a696c926c0b1b5ac2167c9a975352c7e0"},
+    {file = "OpenCC-1.1.2-cp39-cp39-macosx_10_9_arm64.whl", hash = "sha256:e2fd8b96ee02f134bf8b8b6828b058d514446d723a8a1593db526eaefb1aeaca"},
 ]
 pathtools = [
     {file = "pathtools-0.1.2.tar.gz", hash = "sha256:7c35c5421a39bb82e58018febd90e3b6e5db34c5443aaaf742b3f33d4655f1c0"},
