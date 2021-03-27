@@ -16,6 +16,7 @@ loguru = "^0.5.3"
 strsimpy = "^0.2.0"
 coverage = "^5.5"
 OpenCC = "^1.1.2"
+regex = "^2021.3.17"
 
 [tool.poetry.dev-dependencies]
 
