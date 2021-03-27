@@ -4,8 +4,8 @@
 # @Author  : Chenghao Mou (chenghao@gmail.com)
 
 import typer
-import opencc
 
+from hanziconv import HanziConv
 from loguru import logger
 from touchbar_lyric.utility import get_info
 from touchbar_lyric.service import universal_search
@@ -28,15 +28,13 @@ def run(
     if media_info is None:
         return
 
-    converter = opencc.OpenCC('s2t.json')
-    
     songs = universal_search(media_info.name, media_info.artists)
 
     for song in songs:
         if song.anchor(media_info.position):
             line: str = song.anchor(media_info.position)
             if traditional:
-                line = converter.convert(line)
+                line = HanziConv.toTraditional(line)
             print(line)
             break
 

@@ -15,8 +15,8 @@ typer = "^0.3.2"
 loguru = "^0.5.3"
 strsimpy = "^0.2.0"
 coverage = "^5.5"
-OpenCC = "^1.1.2"
 regex = "^2021.3.17"
+hanziconv = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
 
