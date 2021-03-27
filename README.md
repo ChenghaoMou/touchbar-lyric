@@ -24,23 +24,22 @@ pip3 install touchbar_lyric --upgrade
 Same as Kashi:
 
 1.  Copy&paste the content in `lyric.json` in _Meun Bar > Touch Bar_;
-2.  Change the python path `/Users/chenghaomou/Anaconda/bin/python` to your own python path `${PYTHONPATH}` in the script area;
-3.  Change any parameters as you like: `fc`(font color in RGB), `bg`(background color in RGB), and `fs`(font size)
+2.  Change the python path `$PYTHONPATH` to your own python path in the script area;
 
 ```shell
-${PYTHONPATH} -m touchbar_lyric --app Music
+$PYTHONPATH -m touchbar_lyric --app Music
 ```
 
 or use Spotify(default)
 
 ```shell
-${PYTHONPATH} -m touchbar_lyric --app Spotify
+$PYTHONPATH -m touchbar_lyric --app Spotify
 ```
 
 Show Traditional Chinese lyrics
 
 ```shell
-${PYTHONPATH} -m touchbar_lyric --app Spotify --traditional
+$PYTHONPATH -m touchbar_lyric --app Spotify --traditional
 ```
 
 **Be careful with typing double hyphens in BTT. It automatically change it to an em slash. Use copy & paste instead!**
