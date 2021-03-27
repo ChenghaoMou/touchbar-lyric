@@ -43,7 +43,7 @@ def qq_music_search(title: str, artists: str) -> List[Song]:
             content = lyric.lyric or lyric.trans
             songs.append(
                 Song(
-                    title=song.name, 
+                    title=song.name,
                     artists=",".join([x.name for x in song.singer]),
                     target_title=title,
                     target_artists=artists,

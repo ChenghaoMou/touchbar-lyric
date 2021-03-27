@@ -12,7 +12,7 @@ Show synced lyric in the touch-bar with BetterTouchTool and NetEase/QQ Music API
 
 ## Instruction
 
-__If you are not familiar with command line, python ecosystem or having problems understanding this tutorial, find a friend to help you. Issues/DMs are not actively monitored for this project.__
+**If you are not familiar with command line, python ecosystem or having problems understanding this tutorial, find a friend to help you. Issues/DMs are not actively monitored for this project.**
 
 ### 1. Installation
 ```shell

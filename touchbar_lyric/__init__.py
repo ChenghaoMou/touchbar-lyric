@@ -47,13 +47,13 @@ class Song:
         Parameters
         ----------
         timestamp : float
-            Current timestamp   
+            Current timestamp
 
         Returns
         -------
         Optional[str]
             A line or None
-        
+
         Examples
         --------
         >>> song = Song("Hello", "Adele", "Hello", "Adele", "[01:12.34]Hello")
@@ -71,5 +71,5 @@ class Song:
         idx = search_intervals(self.intervals, timestamp)
         if idx != -1:
             return self.lines[idx][-1]
-        
+
         return None

@@ -29,7 +29,7 @@ def get_info(app: str) -> Optional[MediaInformation]:
     --------
     >>> ans = get_info("Spotify")
     >>> assert ans is None or isinstance(ans, MediaInformation)
-    """    
+    """
 
     script: str = f"""
     on run
@@ -47,15 +47,15 @@ def get_info(app: str) -> Optional[MediaInformation]:
     r = applescript.run(script)
 
     logger.debug(r.out)
-    
+
     ans: Optional[MediaInformation] = None
     if r.code == 0 and r.out != "Empty":
         segments = r.out.split(", ")
         ans = MediaInformation(
-            segments[0], 
-            segments[2], 
+            segments[0],
+            segments[2],
             float(segments[4]),
-            {"playing": 2, "paused": 1, "stopped": 0}.get(segments[6], 0), 
+            {"playing": 2, "paused": 1, "stopped": 0}.get(segments[6], 0),
             float(segments[8]) // 1000 if "." not in segments[8] else float(segments[8])
         )
 
@@ -86,8 +86,8 @@ def search_intervals(intervals: List[float], position: float) -> int: # pragma: 
     0
     """
     idx = max(0, bisect.bisect_left(intervals, position) - 1)
-    
+
     if len(intervals) > idx >= 0 and intervals[idx] <= position <= intervals[min(len(intervals) - 1, idx + 1)]:
         return idx
-    
+
     return -1

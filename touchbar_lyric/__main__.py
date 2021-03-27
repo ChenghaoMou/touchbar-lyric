@@ -23,7 +23,7 @@ def run(
     if not debug:
         logger.disable("touchbar_lyric")
         logger.disable("__main__")
-    
+
     media_info = get_info(app)
     if media_info is None:
         return
