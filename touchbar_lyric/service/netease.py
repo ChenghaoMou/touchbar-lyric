@@ -3,8 +3,6 @@
 # @Date    : 2020-03-10 10:54:37
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
-"""Touchbar lyric widget for BTT."""
-
 import base64
 import binascii
 import datetime
@@ -13,7 +11,6 @@ import os
 from typing import Any, Dict, List
 
 import requests
-import textdistance
 from cachier import cachier
 from Crypto.Cipher import AES
 from loguru import logger
@@ -120,36 +117,36 @@ def netease_music_get_lyric(idx) -> str:
 def netease_music_search(title: str, artists: str) -> List[Song]:
     """
     Search from Netease Music with artists and title.
-
     Parameters
     ----------
     title : str
         Name of the song
     artists : str
         Names of the artists
-
     Returns
     -------
     List[Song]
         List of songs
-
     Examples
     --------
-    >>> len(netease_music_search("海阔天空", "Beyond")) > 0
+    >>> songs = netease_music_search("海阔天空", "Beyond", ignore_cache=True)
+    >>> len(songs) > 0
+    True
+    >>> any(s.anchor(10) is not None for s in songs)
     True
     """
 
     eparams = {
         "method": "POST",
         "url": "http://music.163.com/api/cloudsearch/pc",
-        "params": {"s": Song.title_text(title), "type": 1, "offset": 0, "limit": 30},
+        "params": {"s": title, "type": 1, "offset": 0, "limit": 30},
     }
     data = {"eparams": NeteaseRequest.encode_netease_data(eparams)}
 
     res_data = (
         NeteaseRequest.request("http://music.163.com/api/linux/forward", method="POST", data=data)
         .get("result", {})
-        .get("songs", {})
+        .get("songs", [])
     )
     songs = []
     for i, item in enumerate(res_data[:3]):
@@ -157,18 +154,9 @@ def netease_music_search(title: str, artists: str) -> List[Song]:
             s = Song(
                 title=item.get("name", ""),
                 artists=",".join([x["name"] for x in item.get("ar", []) if "name" in x]),
+                target_title=title,
+                target_artists=artists,
                 lyric=netease_music_get_lyric(idx=item["id"]),
             )
-            logger.debug(f"{item.get('id')} {Song.artist_text(s.artists)} VS {Song.artist_text(artists)}")
-            songs.append(
-                (
-                    textdistance.levenshtein.distance(s.title, title),
-                    textdistance.levenshtein.distance(s.artists, artists),
-                    textdistance.levenshtein.distance(Song.title_text(s.title), title),
-                    textdistance.levenshtein.distance(Song.artist_text(s.artists), Song.artist_text(artists)),
-                    i,
-                    s,
-                )
-            )
-    songs = sorted(songs, key=lambda x: x[:-1])
+            songs.append(s)
     return songs
