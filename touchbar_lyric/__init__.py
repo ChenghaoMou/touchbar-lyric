@@ -59,8 +59,8 @@ class Song:
         >>> song = Song("Hello", "Adele", "Hello", "Adele", "[01:12.34]Hello")
         >>> song.anchor(60)
         'Hello'
-        >>> song.anchor(120) is None
-        True
+        >>> song.anchor(120)
+        'Hello'
         >>> song = Song("Hello", "Adele", "Hello", "Adele", "")
         >>> song.anchor(10) is None
         True
