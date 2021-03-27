@@ -4,6 +4,9 @@
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase/QQ Music APIs. Based on the idea of [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301).
 
+![Preview](./lyric_chinese.png)
+![Preview](./lyric_english.png)
+
 ## Features
 
 -   **Synced lyrics** from QQ Music and NetEase Music APIs;
