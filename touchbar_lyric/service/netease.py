@@ -149,7 +149,7 @@ def netease_music_search(title: str, artists: str) -> List[Song]:
         .get("songs", [])
     )
     songs = []
-    for i, item in enumerate(res_data[:3]):
+    for _, item in enumerate(res_data[:3]):
         if item.get("id", None) is not None:
             s = Song(
                 title=item.get("name", ""),

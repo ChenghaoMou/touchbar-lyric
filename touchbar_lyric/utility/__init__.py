@@ -88,7 +88,7 @@ def search_intervals(intervals: List[float], position: float) -> int: # pragma: 
     1
     """
     idx = max(0, bisect.bisect_left(intervals, position) - 1)
-    
+
     if len(intervals) > idx >= 0 and (idx == 0 or idx == len(intervals) - 1 or (intervals[idx] <= position <= intervals[idx + 1])):
         return idx
 
