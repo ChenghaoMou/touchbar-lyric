@@ -29,7 +29,6 @@ class Song:
 
         self.lines = []
         self.intervals = []
-        prev = 0
         for line in lyric.split('\n'):
             info, *words = line.rsplit(']', 1)
             timestamp = re.search(r"\[([0-9]+):([0-9]+)\.([0-9]+)\]", info + "]")
@@ -37,11 +36,10 @@ class Song:
             minute, second, subsecond = timestamp.group(1), timestamp.group(2), timestamp.group(3)
             curr_stamp = int(minute) * 60 + int(second) + int(subsecond) / 100
             self.lines.append((
-                (prev, curr_stamp),
+                curr_stamp,
                 "".join(words)
             ))
-            self.intervals.append((prev, curr_stamp))
-            prev = curr_stamp
+            self.intervals.append(curr_stamp)
 
     def anchor(self, timestamp: float) -> Optional[str]:
         """Find current timestamp for this song.

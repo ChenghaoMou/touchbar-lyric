@@ -19,6 +19,10 @@ def run(
         True: logger.enable,
         False: logger.disable
     }[debug]("touchbar_lyric")
+
+    if not debug:
+        logger.disable("touchbar_lyric")
+        logger.disable("__main__")
     
     media_info = get_info(app)
     if media_info is None:
@@ -27,6 +31,7 @@ def run(
     converter = opencc.OpenCC('s2t.json')
     
     songs = universal_search(media_info.name, media_info.artists)
+
     for song in songs:
         if song.anchor(media_info.position):
             line: str = song.anchor(media_info.position)

@@ -63,13 +63,13 @@ def get_info(app: str) -> Optional[MediaInformation]:
 
     return ans
 
-def search_intervals(intervals: List[Tuple[float, float]], position: float) -> int: # pragma: no cover
+def search_intervals(intervals: List[float], position: float) -> int: # pragma: no cover
     """Search a timestamp in a list of intervals.
 
     Parameters
     ----------
-    intervals : List[Tuple[float, float]]
-        List of intervals
+    intervals : List[float]
+        List of timestamps
     position : float
         Current timestamp
 
@@ -80,14 +80,14 @@ def search_intervals(intervals: List[Tuple[float, float]], position: float) -> i
 
     Examples
     --------
-    >>> search_intervals([(0, 12), (12, 15)], 13)
+    >>> search_intervals([0, 12, 15], 13)
     1
-    >>> search_intervals([(0, 12), (12, 15)], 7)
+    >>> search_intervals([0, 12, 15], 7)
     0
     """
-    _, maximums = zip(*intervals)
-    idx = bisect.bisect_left(maximums, position)
-    if len(intervals) > idx >= 0 and intervals[idx][0] <= position <= intervals[idx][1]:
+    idx = max(0, bisect.bisect_left(intervals, position) - 1)
+    
+    if len(intervals) > idx >= 0 and intervals[idx] <= position <= intervals[min(len(intervals) - 1, idx + 1)]:
         return idx
     
     return -1
