@@ -121,6 +121,14 @@ redis = ["redis"]
 tests = ["pytest (>=5.4.1)", "pytest-cov (>=2.8.1)", "sphinx (>=3.0.3)", "pytest-flake8 (>=1.0.5)", "pytest-mypy (>=0.8.0)", "redis"]
 
 [[package]]
+name = "pycrypto"
+version = "2.6.1"
+description = "Cryptographic modules for Python."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pywin32"
 version = "300"
 description = "Python for Window Extensions"
@@ -228,7 +236,7 @@ dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "df47c9b7b2517f35510874d3a2256e0143d5ccaf204ec8f84b997db5aeed83a1"
+content-hash = "93ce4c6834e1fbd0cab2952a2182b5d429bdbadf4f52c6cc726826257b8e4ae9"
 
 [metadata.files]
 applescript = [
@@ -325,6 +333,9 @@ pathtools = [
 portalocker = [
     {file = "portalocker-2.2.1-py2.py3-none-any.whl", hash = "sha256:afa66c85041d7bac1532acb74ff26cc2406472dcf7145c90c31ff8ca4f1cc146"},
     {file = "portalocker-2.2.1.tar.gz", hash = "sha256:e5f6ffb2f360e9aef615a7c284143d2a93bb640c62e8e45a703e6083fc5aa114"},
+]
+pycrypto = [
+    {file = "pycrypto-2.6.1.tar.gz", hash = "sha256:f2ce1e989b272cfcb677616763e0a2e7ec659effa67a88aa92b3a65528f60a3c"},
 ]
 pywin32 = [
     {file = "pywin32-300-cp35-cp35m-win32.whl", hash = "sha256:1c204a81daed2089e55d11eefa4826c05e604d27fe2be40b6bf8db7b6a39da63"},

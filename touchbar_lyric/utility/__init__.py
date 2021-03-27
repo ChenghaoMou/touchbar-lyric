@@ -5,7 +5,7 @@
 
 import bisect
 from collections import namedtuple
-from typing import Optional, List, Tuple
+from typing import Optional, List
 
 import applescript
 from loguru import logger

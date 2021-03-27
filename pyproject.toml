@@ -17,6 +17,7 @@ strsimpy = "^0.2.0"
 coverage = "^5.5"
 regex = "^2021.3.17"
 hanziconv = "^0.3.2"
+pycrypto = "^2.6.1"
 
 [tool.poetry.dev-dependencies]
 
