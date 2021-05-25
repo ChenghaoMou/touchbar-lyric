@@ -11,6 +11,7 @@ from dataclasses import dataclass
 
 from touchbar_lyric.utility import search_intervals
 
+
 @dataclass
 class Song:
 
@@ -29,16 +30,18 @@ class Song:
 
         self.lines = []
         self.intervals = []
-        for line in lyric.split('\n'):
-            info, *words = line.rsplit(']', 1)
+        for line in lyric.split("\n"):
+            info, *words = line.rsplit("]", 1)
             timestamp = re.search(r"\[([0-9]+):([0-9]+)\.([0-9]+)\]", info + "]")
-            if not timestamp: continue
-            minute, second, subsecond = timestamp.group(1), timestamp.group(2), timestamp.group(3)
+            if not timestamp:
+                continue
+            minute, second, subsecond = (
+                timestamp.group(1),
+                timestamp.group(2),
+                timestamp.group(3),
+            )
             curr_stamp = int(minute) * 60 + int(second) + int(subsecond) / 100
-            self.lines.append((
-                curr_stamp,
-                "".join(words)
-            ))
+            self.lines.append((curr_stamp, "".join(words)))
             self.intervals.append(curr_stamp)
 
     def anchor(self, timestamp: float) -> Optional[str]:

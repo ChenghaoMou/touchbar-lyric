@@ -4,21 +4,33 @@
 # @Author  : Chenghao Mou (chenghao@gmail.com)
 
 import typer
+import logging.config
 
 from hanziconv import HanziConv
 from loguru import logger
 from touchbar_lyric.utility import get_info
 from touchbar_lyric.service import universal_search
 
+logging.config.dictConfig(
+    {
+        "version": 1,
+        "disable_existing_loggers": True,
+    }
+)
+
+
 def run(
     app: str = typer.Option(default="Spotify", help="Application to track"),
-    debug: bool = typer.Option(default=False, is_flag=True, help="To show debug messages or not"),
-    traditional: bool = typer.Option(default=False, is_flag=True, help="Translate lyrics into Traditional Chinese if possible")
-): # pragma: no cover
-    {
-        True: logger.enable,
-        False: logger.disable
-    }[debug]("touchbar_lyric")
+    debug: bool = typer.Option(
+        default=False, is_flag=True, help="To show debug messages or not"
+    ),
+    traditional: bool = typer.Option(
+        default=False,
+        is_flag=True,
+        help="Translate lyrics into Traditional Chinese if possible",
+    ),
+):  # pragma: no cover
+    {True: logger.enable, False: logger.disable}[debug]("touchbar_lyric")
 
     if not debug:
         logger.disable("touchbar_lyric")
@@ -28,7 +40,11 @@ def run(
     if media_info is None:
         return
 
-    songs = universal_search(media_info.name, media_info.artists)
+    try:
+        songs = universal_search(media_info.name, media_info.artists)
+    except:
+        songs = []
+        pass
 
     for song in songs:
         if song.anchor(media_info.position):
@@ -38,5 +54,6 @@ def run(
             print(line)
             break
 
-if __name__ == "__main__": # pragma: no cover
+
+if __name__ == "__main__":  # pragma: no cover
     typer.run(run)
