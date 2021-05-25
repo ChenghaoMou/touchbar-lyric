@@ -10,7 +10,10 @@ from typing import Optional, List
 import applescript
 from loguru import logger
 
-MediaInformation = namedtuple("MediaInformation", ["name", "artists", "position", "state", "durantion"])
+MediaInformation = namedtuple(
+    "MediaInformation", ["name", "artists", "position", "state", "durantion"]
+)
+
 
 def get_info(app: str) -> Optional[MediaInformation]:
     """Get media information with apple script.
@@ -56,14 +59,19 @@ def get_info(app: str) -> Optional[MediaInformation]:
             segments[2],
             float(segments[4]),
             {"playing": 2, "paused": 1, "stopped": 0}.get(segments[6], 0),
-            float(segments[8]) // 1000 if "." not in segments[8] else float(segments[8])
+            float(segments[8]) // 1000
+            if "." not in segments[8]
+            else float(segments[8]),
         )
 
     logger.debug(ans)
 
     return ans
 
-def search_intervals(intervals: List[float], position: float) -> int: # pragma: no cover
+
+def search_intervals(
+    intervals: List[float], position: float
+) -> int:  # pragma: no cover
     """Search a timestamp in a list of intervals.
 
     Parameters
@@ -89,7 +97,11 @@ def search_intervals(intervals: List[float], position: float) -> int: # pragma: 
     """
     idx = max(0, bisect.bisect_left(intervals, position) - 1)
 
-    if len(intervals) > idx >= 0 and (idx == 0 or idx == len(intervals) - 1 or (intervals[idx] <= position <= intervals[idx + 1])):
+    if len(intervals) > idx >= 0 and (
+        idx == 0
+        or idx == len(intervals) - 1
+        or (intervals[idx] <= position <= intervals[idx + 1])
+    ):
         return idx
 
     return -1

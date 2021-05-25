@@ -5,13 +5,12 @@
 
 import base64
 import binascii
-import datetime
 import json
 import os
 from typing import Any, Dict, List
 
 import requests
-from cachier import cachier
+
 from Crypto.Cipher import AES
 from loguru import logger
 
@@ -79,7 +78,9 @@ class NeteaseRequest:  # pragma: no cover
         return binascii.hexlify(os.urandom(size))[:16]
 
     @classmethod
-    def request(cls, url: str, data: Dict[str, Any], method: str = "POST") -> Dict[str, Any]:
+    def request(
+        cls, url: str, data: Dict[str, Any], method: str = "POST"
+    ) -> Dict[str, Any]:
 
         results = {}
         status = requests.codes.ok
@@ -103,17 +104,19 @@ class NeteaseRequest:  # pragma: no cover
         return results
 
 
-@cachier(stale_after=datetime.timedelta(days=30))  # pragma: no cover
 def netease_music_get_lyric(idx) -> str:
-    data = NeteaseRequest.encrypted_request({"csrf_token": "", "id": idx, "lv": -1, "tv": -1})
+    data = NeteaseRequest.encrypted_request(
+        {"csrf_token": "", "id": idx, "lv": -1, "tv": -1}
+    )
     return (
-        NeteaseRequest.request(url="https://music.163.com/weapi/song/lyric", method="POST", data=data)
+        NeteaseRequest.request(
+            url="https://music.163.com/weapi/song/lyric", method="POST", data=data
+        )
         .get("lrc", {})
         .get("lyric", "")
     )
 
 
-@cachier(stale_after=datetime.timedelta(days=30))
 def netease_music_search(title: str, artists: str) -> List[Song]:
     """
     Search from Netease Music with artists and title.
@@ -129,7 +132,7 @@ def netease_music_search(title: str, artists: str) -> List[Song]:
         List of songs
     Examples
     --------
-    >>> songs = netease_music_search("海阔天空", "Beyond", ignore_cache=True)
+    >>> songs = netease_music_search("海阔天空", "Beyond")
     >>> len(songs) > 0
     True
     >>> any(s.anchor(10) is not None for s in songs)
@@ -144,16 +147,20 @@ def netease_music_search(title: str, artists: str) -> List[Song]:
     data = {"eparams": NeteaseRequest.encode_netease_data(eparams)}
 
     res_data = (
-        NeteaseRequest.request("http://music.163.com/api/linux/forward", method="POST", data=data)
+        NeteaseRequest.request(
+            "http://music.163.com/api/linux/forward", method="POST", data=data
+        )
         .get("result", {})
         .get("songs", [])
     )
     songs = []
-    for _, item in enumerate(res_data[:3]):
+    for _, item in enumerate(res_data[:2]):
         if item.get("id", None) is not None:
             s = Song(
                 title=item.get("name", ""),
-                artists=",".join([x["name"] for x in item.get("ar", []) if "name" in x]),
+                artists=",".join(
+                    [x["name"] for x in item.get("ar", []) if "name" in x]
+                ),
                 target_title=title,
                 target_artists=artists,
                 lyric=netease_music_get_lyric(idx=item["id"]),

@@ -3,16 +3,14 @@
 # @Date    : 2020-08-16 09:10:24
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
-import datetime
+
 from typing import List
 
-from cachier import cachier
 from QQMusicAPI import QQMusic
 
 from touchbar_lyric import Song
 
 
-@cachier(stale_after=datetime.timedelta(days=30))
 def qq_music_search(title: str, artists: str) -> List[Song]:
     """
     Search from QQ Music with artists and title.
@@ -36,6 +34,7 @@ def qq_music_search(title: str, artists: str) -> List[Song]:
     """
     response = QQMusic.search(title)
     songs = []
+    top: int = 3
     for song in response.data:
         lyric = song.lyric
         lyric.extract()
@@ -47,7 +46,10 @@ def qq_music_search(title: str, artists: str) -> List[Song]:
                     artists=",".join([x.name for x in song.singer]),
                     target_title=title,
                     target_artists=artists,
-                    lyric=content
+                    lyric=content,
                 )
             )
+            top -= 1
+            if top == 0:
+                break
     return songs
