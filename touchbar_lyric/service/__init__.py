@@ -3,7 +3,7 @@
 # @Date    : 2021-03-14 15:54:40
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
-
+import os
 import logging.config
 from typing import List
 
@@ -20,8 +20,12 @@ from touchbar_lyric.service.netease import netease_music_search
 from touchbar_lyric.service.qq import qq_music_search
 from diskcache import FanoutCache
 
+CACHE = os.path.join(os.path.expanduser("~"), ".cache")
 
-cache = FanoutCache(".cache", timeout=2)
+if not os.path.exists(CACHE):
+    os.mkdir(CACHE)
+
+cache = FanoutCache(CACHE, timeout=2)
 
 
 @cache.memoize(typed=True, expire=None, tag="lyric")

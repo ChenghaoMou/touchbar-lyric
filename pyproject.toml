@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "touchbar-lyric"
-version = "0.6.4"
+version = "0.6.5"
 description = "Display lyrics on your touchbar with BTT"
 authors = ["Chenghao Mou <mouchenghao@gmail.com>"]
 license = "MIT"
