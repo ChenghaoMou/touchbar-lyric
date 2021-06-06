@@ -1,5 +1,5 @@
 os: osx
-language: sh
+language: shell
 addons:
   homebrew:
     packages: python3
@@ -14,17 +14,19 @@ script: python -m touchbar_lyric
 notifications:
   email:
     on_failure: never
-    on_pull_requests: never
+
+before_deploy:
+  - pip install --upgrade pip
+  - pip install poetry
+  - poetry config http-basic.pypi $PYPI_USER $PYPI_PASS
+  - poetry build
+
 deploy:
-  provider: pypi
-  user: Maxen1996
+  provider: script
+  script: poetry publish
+  cleanup: false
   on:
     tags: true
     branch:
       - "master"
       - "/v?(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$/"
-  distributions: sdist
-  skip_existing: false
-  skip_cleanup: true
-  password:
-    secure: ZM+adaYeYScP0V9RXZocJUyvyw7R7MMYFZSr4JrPxMLNUcmntH83SP92OI1ejEqO81eKbuX6SU7RHt/KtZUDtymoI3GoCliTujI+wxiV/n/jj0Bt6CW7M0TS9dElHl4CCgszG3zm9KFJKiiGtL1j0Dokahach/k/i5fbLCcUpIzQwqav5j6UHc5ZvLysSSyTc6fcW5aegx9gj6UE1kUo/Z9MTgHFspAeAoPqvmFIW6rZDtYcyA5kXIQZoECLXLkiNwAif94QrBQMKfgJdaNydlxoXn9ujanhrPmZxMPRWz+h2iMD009knKBOc5PRF38K+Ba0DDhJ0Wvqsyoqh4eynvfk4BDOCHlRh2yM1wvcVWYLeXhLle3iTy4So75QHyXKwFA/cjgjLjece+Cn+hHNQhUplRWcDZgpOaWtjUPhl+TI/4nLzwK1tHgZ1avksPR8WnSbqBKrMBNlk3HY7si/cG4mMRFhjpT8C6tGmvZj/uIz1lb1XDKFBcks28V9neyy384V45/8nlTlKca/xf9LYAaug6ToChOoJa3RK9no1s+Mxu2+LqpbmWGYXAkcEKQOunW7p8B/ZqnibGQouVAgVTrtG0ysT3R/fen2gXSIsWT92clsSBF5kGMZ8r3WiXDEduwYiZ1wW/UDDc1vLLdgdoHP8m0BsySIJlHgfkrwMkE=
