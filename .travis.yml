@@ -24,7 +24,7 @@ before_deploy:
 deploy:
   provider: script
   script: poetry publish
-  cleanup: false
+  skip_cleanup: true
   on:
     tags: true
     branch:
