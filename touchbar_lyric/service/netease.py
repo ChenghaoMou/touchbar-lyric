@@ -40,7 +40,9 @@ class NeteaseRequest:  # pragma: no cover
         pad = 16 - len(data) % 16
         fix = chr(pad) * pad
         byte_data = (data + fix).encode("utf-8")
-        return binascii.hexlify(encryptor.feed(byte_data)).upper().decode()
+        ciphertext = encryptor.feed(byte_data)
+        ciphertext += encryptor.feed()
+        return binascii.hexlify(ciphertext).upper().decode()
 
     @classmethod
     def encrypted_request(cls, data) -> dict:  # pragma: no cover
@@ -63,8 +65,10 @@ class NeteaseRequest:  # pragma: no cover
     def aes(cls, text, key):  # pragma: no cover
         pad = 16 - len(text) % 16
         text = text + bytearray([pad] * pad)
-        encryptor = pyaes.AESModeOfOperationCBC(key, iv=b"0102030405060708")
-        ciphertext = encryptor.encrypt(text)
+        encryptor = pyaes.Encrypter(
+            pyaes.AESModeOfOperationCBC(key, iv=b"0102030405060708"))
+        ciphertext = encryptor.feed(text)
+        ciphertext += encryptor.feed()
         return base64.b64encode(ciphertext)
 
     @classmethod

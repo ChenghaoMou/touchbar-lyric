@@ -28,7 +28,7 @@ def qq_music_search(title: str, artists: str) -> List[Song]:
         List of songs
     Examples
     --------
-    >>> songs = qq_music_search("海阔天空", "Beyond", ignore_cache=True)
+    >>> songs = qq_music_search("海阔天空", "Beyond")
     >>> len(songs) > 0
     True
     >>> any(s.anchor(10) is not None for s in songs)
