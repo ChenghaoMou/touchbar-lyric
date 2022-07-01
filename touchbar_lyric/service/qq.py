@@ -4,6 +4,8 @@
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
 
+import json
+from asyncio.log import logger
 from typing import List
 
 from QQMusicAPI import QQMusic
@@ -32,7 +34,11 @@ def qq_music_search(title: str, artists: str) -> List[Song]:
     >>> any(s.anchor(10) is not None for s in songs)
     True
     """
-    response = QQMusic.search(title)
+    try:
+        response = QQMusic.search(title)
+    except json.decoder.JSONDecodeError as e:
+        logger.error(e)
+        return []
     songs = []
     top: int = 3
     for song in response.data:

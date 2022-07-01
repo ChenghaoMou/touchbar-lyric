@@ -9,8 +9,8 @@ import json
 import os
 from typing import Any, Dict, List
 
+import pyaes
 import requests
-
 from Crypto.Cipher import AES
 from loguru import logger
 
@@ -36,11 +36,11 @@ class NeteaseRequest:  # pragma: no cover
     def encode_netease_data(cls, data) -> str:  # pragma: no cover
         data = json.dumps(data)
         key = binascii.unhexlify("7246674226682325323F5E6544673A51")
-        encryptor = AES.new(key, AES.MODE_ECB)
+        encryptor = pyaes.Encrypter(pyaes.AESModeOfOperationECB(key))
         pad = 16 - len(data) % 16
         fix = chr(pad) * pad
         byte_data = (data + fix).encode("utf-8")
-        return binascii.hexlify(encryptor.encrypt(byte_data)).upper().decode()
+        return binascii.hexlify(encryptor.feed(byte_data)).upper().decode()
 
     @classmethod
     def encrypted_request(cls, data) -> dict:  # pragma: no cover
@@ -63,7 +63,7 @@ class NeteaseRequest:  # pragma: no cover
     def aes(cls, text, key):  # pragma: no cover
         pad = 16 - len(text) % 16
         text = text + bytearray([pad] * pad)
-        encryptor = AES.new(key, 2, b"0102030405060708")
+        encryptor = pyaes.AESModeOfOperationCBC(key, iv=b"0102030405060708")
         ciphertext = encryptor.encrypt(text)
         return base64.b64encode(ciphertext)
 

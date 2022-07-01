@@ -4,10 +4,10 @@
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
 import html
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
 
 import regex as re
-from typing import Dict, Optional, Tuple, List
-from dataclasses import dataclass
 
 from touchbar_lyric.utility import search_intervals
 
@@ -20,8 +20,8 @@ class Song:
     target_title: str
     target_artists: str
     lyric: str
-    lines: Optional[Dict[Tuple[float, float], str]] = None
-    intervals: Optional[List[Tuple[float, float]]] = None
+    lines: Optional[List[Tuple[float, str]]] = None
+    intervals: Optional[List[float]] = None
 
     def __post_init__(self):
 
@@ -68,7 +68,7 @@ class Song:
         >>> song.anchor(10) is None
         True
         """
-        if not self.intervals:
+        if not self.intervals or not self.lines:
             return None
 
         idx = search_intervals(self.intervals, timestamp)

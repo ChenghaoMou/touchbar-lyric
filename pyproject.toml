@@ -10,7 +10,6 @@ readme = "README.md"
 python = "^3.7"
 applescript = "^2021.2.9"
 qqmusic-api = "^0.1"
-cachier = "^1.5.0"
 typer = "^0.3.2"
 loguru = "^0.5.3"
 strsimpy = "^0.2.0"
@@ -19,8 +18,10 @@ regex = "^2021.3.17"
 hanziconv = "^0.3.2"
 pycrypto = "^2.6.1"
 diskcache = "^5.2.1"
+pyaes = "^1.6.1"
 
 [tool.poetry.dev-dependencies]
+pre-commit = "^2.19.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

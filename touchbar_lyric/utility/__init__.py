@@ -5,7 +5,7 @@
 
 import bisect
 from collections import namedtuple
-from typing import Optional, List
+from typing import List, Optional
 
 import applescript
 from loguru import logger
@@ -38,7 +38,7 @@ def get_info(app: str) -> Optional[MediaInformation]:
     on run
         if application "{app}" is running then
             tell application "{app}"
-                set currentInfo to {{name of current track, "|", artist of current track, "|", player position, "|", player state, "|", duration of current track}}
+                set currentInfo to {{name of current track, "|||", artist of current track, "|||", player position, "|||", player state, "|||", duration of current track}}
             end tell
         else
             set currentInfo to "Empty"
@@ -53,15 +53,18 @@ def get_info(app: str) -> Optional[MediaInformation]:
 
     ans: Optional[MediaInformation] = None
     if r.code == 0 and r.out != "Empty":
-        segments = r.out.split(", ")
+        segments = r.out.split(", |||, ")
+        segments = [s.strip(', ') for s in segments]
+        if len(segments) != 5:
+            return ans
         ans = MediaInformation(
             segments[0],
-            segments[2],
-            float(segments[4]),
-            {"playing": 2, "paused": 1, "stopped": 0}.get(segments[6], 0),
-            float(segments[8]) // 1000
-            if "." not in segments[8]
-            else float(segments[8]),
+            segments[1],
+            float(segments[2]),
+            {"playing": 2, "paused": 1, "stopped": 0}.get(segments[3], 0),
+            float(segments[4]) // 1000
+            if "." not in segments[4]
+            else float(segments[4]),
         )
 
     logger.debug(ans)
