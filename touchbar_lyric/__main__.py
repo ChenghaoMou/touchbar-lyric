@@ -3,13 +3,14 @@
 # @Date    : 2021-03-14 15:29:12
 # @Author  : Chenghao Mou (chenghao@gmail.com)
 
-import typer
 import logging.config
 
+import typer
 from hanziconv import HanziConv
 from loguru import logger
-from touchbar_lyric.utility import get_info
+
 from touchbar_lyric.service import universal_search
+from touchbar_lyric.utility import get_info
 
 logging.config.dictConfig(
     {
@@ -41,7 +42,8 @@ def run(
         return
 
     songs = universal_search(media_info.name, media_info.artists)
-
+    logger.debug("|".join(song.title for song in songs))
+    logger.debug("|".join(song.artists for song in songs))
     for song in songs:
         if song.anchor(media_info.position):
             line: str = song.anchor(media_info.position)
