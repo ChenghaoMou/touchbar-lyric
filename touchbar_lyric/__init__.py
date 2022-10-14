@@ -40,7 +40,8 @@ class Song:
                 timestamp.group(2),
                 timestamp.group(3),
             )
-            curr_stamp = int(minute) * 60 + int(second) + int(subsecond) / 100
+            curr_stamp = int(minute) * 60 + int(second) + \
+                int(subsecond) / (10**len(subsecond))
             self.lines.append((curr_stamp, "".join(words)))
             self.intervals.append(curr_stamp)
 

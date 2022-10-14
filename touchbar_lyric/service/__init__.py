@@ -3,9 +3,17 @@
 # @Date    : 2021-03-14 15:54:40
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
 
-import os
 import logging.config
-from typing import List
+import os
+from typing import List, Tuple
+
+from diskcache import FanoutCache
+from hanziconv import HanziConv
+from strsimpy.normalized_levenshtein import NormalizedLevenshtein
+
+from touchbar_lyric import Song
+from touchbar_lyric.service.netease import netease_music_search
+from touchbar_lyric.service.qq import qq_music_search
 
 logging.config.dictConfig(
     {
@@ -14,11 +22,6 @@ logging.config.dictConfig(
     }
 )
 
-from strsimpy.normalized_levenshtein import NormalizedLevenshtein
-from touchbar_lyric import Song
-from touchbar_lyric.service.netease import netease_music_search
-from touchbar_lyric.service.qq import qq_music_search
-from diskcache import FanoutCache
 
 CACHE = os.path.join(os.path.expanduser("~"), ".cache")
 
@@ -30,17 +33,17 @@ cache = FanoutCache(CACHE, timeout=2)
 
 @cache.memoize(typed=True, expire=None, tag="lyric")
 def universal_search(title: str, artists: str) -> List[Song]:  # pragma: no cover
-    songs = []
-    songs.extend(qq_music_search(title, artists))
-    songs.extend(netease_music_search(title, artists))
+    songs: List[Tuple[int, Song]] = []
+    title = HanziConv.toSimplified(title)
+    songs.extend((-i, s) for i, s in enumerate(netease_music_search(title, artists)))
+    songs.extend((-i, s) for i, s in enumerate(qq_music_search(title, artists)))
 
-    songs = sorted(
+    return [s[1] for s in sorted(
         songs,
         key=lambda s: (
-            NormalizedLevenshtein().similarity(s.title, s.target_title)
-            + NormalizedLevenshtein().similarity(s.artists, s.target_artists),
+            NormalizedLevenshtein().similarity(s[1].title, s[1].target_title)
+            + NormalizedLevenshtein().similarity(s[1].artists, s[1].target_artists),
+            s[0],
         ),
         reverse=True,
-    )
-
-    return songs
+    )]
