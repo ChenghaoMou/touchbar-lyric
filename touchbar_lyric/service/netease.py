@@ -11,7 +11,6 @@ from typing import Any, Dict, List
 
 import pyaes
 import requests
-from Crypto.Cipher import AES
 from loguru import logger
 
 from touchbar_lyric import Song
