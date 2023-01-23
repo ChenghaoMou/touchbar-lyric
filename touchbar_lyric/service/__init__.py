@@ -12,6 +12,10 @@ from hanziconv import HanziConv
 from strsimpy.normalized_levenshtein import NormalizedLevenshtein
 
 from touchbar_lyric import Song
+from touchbar_lyric.service.misc import (lyricsify_music_search,
+                                         megalobiz_music_search,
+                                         rclyricsband_music_search,
+                                         rentanadviser_music_search)
 from touchbar_lyric.service.netease import netease_music_search
 from touchbar_lyric.service.qq import qq_music_search
 
@@ -37,6 +41,12 @@ def universal_search(title: str, artists: str) -> List[Song]:  # pragma: no cove
     title = HanziConv.toSimplified(title)
     songs.extend((-i, s) for i, s in enumerate(netease_music_search(title, artists)))
     songs.extend((-i, s) for i, s in enumerate(qq_music_search(title, artists)))
+    songs.extend((-i, s)
+                 for i, s in enumerate(rentanadviser_music_search(title, artists)))
+    songs.extend((-i, s) for i, s in enumerate(megalobiz_music_search(title, artists)))
+    songs.extend((-i, s) for i, s in enumerate(lyricsify_music_search(title, artists)))
+    songs.extend((-i, s)
+                 for i, s in enumerate(rclyricsband_music_search(title, artists)))
 
     return [s[1] for s in sorted(
         songs,

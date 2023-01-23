@@ -109,3 +109,4 @@ cobertura.xml
 .isort.cfg
 .pre-commit-config.yaml
 *jar
+.DS_Store

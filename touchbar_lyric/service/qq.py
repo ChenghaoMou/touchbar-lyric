@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Date    : 2020-08-16 09:10:24
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
-
-
 import json
 from asyncio.log import logger
 from typing import List

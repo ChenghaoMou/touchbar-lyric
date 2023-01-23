@@ -5,7 +5,7 @@
 
 import html
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 import regex as re
 

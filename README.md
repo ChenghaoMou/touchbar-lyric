@@ -1,5 +1,7 @@
 <center><h1>Synced Lyric on TouchBar</h1></center>
 
+:warning: I no longer have a macbook with TouchBar, so I won't be able to update this project as often.
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/77de523131f9441997db18c608b3c54e)](https://app.codacy.com/manual/mouchenghao/touchbar-lyric?utm_source=github.com&utm_medium=referral&utm_content=ChenghaoMou/touchbar-lyric&utm_campaign=Badge_Grade_Dashboard) [![Build Status](https://travis-ci.com/ChenghaoMou/touchbar-lyric.svg?branch=master)](https://travis-ci.com/ChenghaoMou/touchbar-lyric) [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/aadeca6117a14aa6b655e21d5bbc09ea)](https://www.codacy.com/manual/mouchenghao/touchbar-lyric?utm_source=github.com&utm_medium=referral&utm_content=ChenghaoMou/touchbar-lyric&utm_campaign=Badge_Coverage) [![PyPI version](https://badge.fury.io/py/touchbar-lyric.svg)](https://badge.fury.io/py/touchbar-lyric)
 
 Show synced lyric in the touch-bar with BetterTouchTool and NetEase/QQ Music APIs. Based on the idea of [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301).
@@ -46,3 +48,12 @@ $PYTHONPATH -m touchbar_lyric --app Spotify --traditional
 ```
 
 **Be careful with typing double hyphens in BTT. It automatically change it to an em slash. Use copy & paste instead!**
+
+## Acknowledgement
+
+1. Inspired by [Kashi](https://community.folivora.ai/t/kashi-show-current-song-lyrics-on-touch-bar-spotify-itunes-youtube/6301) by [Jim Ho](https://github.com/jimu-gh).
+2. Supported by wonderful projects like [qq-music-api](https://github.com/Rain120/qq-music-api) by [Rain120](https://github.com/Rain120) and [spotifylyrics](https://github.com/SimonIT/spotifylyrics) by [SimonIT](https://github.com/SimonIT).
+
+## Disclaimer
+
+This project is not affiliated with Apple, Spotify, QQ Music, NetEase Music, BetterTouchTool or any other third party. This project is not intended to violate any terms of service of the aforementioned parties. This project is for educational purposes only.
