@@ -52,7 +52,10 @@ def rentanadviser_music_search(title: str, artists: str) -> List[Song]:
     }'''
     search_results = requests.get(search_url, proxies=proxy)
     soup = BeautifulSoup(search_results.text, 'html.parser')
-    result_links = soup.find(id="tablecontainer").find_all("a")
+    container = soup.find(id="tablecontainer")
+    if not container:
+        return []
+    result_links = container.find_all("a")
 
     for result_link in result_links:
         if result_link["href"] != "subtitles4songs.aspx":
@@ -143,9 +146,17 @@ def rclyricsband_music_search(title: str, artists: str) -> List[Song]:
     search_results = requests.get(
         "https://rclyricsband.com/", params={"s": "%s %s" % (artists, title)}, proxies=proxy)
     search_soup = BeautifulSoup(search_results.text, 'html.parser')
-
-    for result in search_soup.find(id="main").find_all("article"):
-        title_link = result.find(class_="elementor-post__title").find("a")
+    main = search_soup.find(id="main")
+    if not main:
+        return []
+    articles = main.find_all("article")
+    if not articles:
+        return []
+    for result in articles:
+        try:
+            title_link = result.find(class_="elementor-post__title").find("a")
+        except Exception:
+            continue
         info = title_link.get_text()
         if not name_comparison(info, info, title, artists):
             continue
@@ -176,7 +187,10 @@ def megalobiz_music_search(title: str, artists: str) -> List[Song]:
     })
     search_results = requests.get(search_url, proxies=proxy)
     soup = BeautifulSoup(search_results.text, 'html.parser')
-    result_links = soup.find(id="list_entity_container").find_all(
+    container = soup.find(id="list_entity_container")
+    if not container:
+        return []
+    result_links = container.find_all(
         "a", class_="entity_name")
 
     for result_link in result_links:
@@ -187,7 +201,13 @@ def megalobiz_music_search(title: str, artists: str) -> List[Song]:
         possible_text = requests.get(url, proxies=proxy)
         soup = BeautifulSoup(possible_text.text, 'html.parser')
 
-        lrc = soup.find("div", class_="lyrics_details").span.get_text()
+        div = soup.find("div", class_="lyrics_details")
+        if not div:
+            continue
+        try:
+            lrc = div.span.get_text()
+        except Exception:
+            continue
 
         return [Song(
             title=info,
